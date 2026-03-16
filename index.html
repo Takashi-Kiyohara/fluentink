@@ -1,0 +1,3119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1">
+<title>FluentInk — English Daily Journal</title>
+<!-- PWA -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FluentInk">
+<meta name="theme-color" content="#6C63FF">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   FluentInk v2.0 — Premium English Journaling App
+   Sussex University 留学準備用
+   ================================================================ */
+
+/* ===== CSS Custom Properties ===== */
+:root {
+  --bg-primary: #F5F6FA;
+  --bg-secondary: #FFFFFF;
+  --bg-tertiary: #ECEEF5;
+  --bg-card: rgba(255,255,255,0.92);
+  --bg-card-solid: #FFFFFF;
+  --bg-glass: rgba(255,255,255,0.72);
+  --bg-glass-heavy: rgba(255,255,255,0.88);
+  --text-primary: #111827;
+  --text-secondary: #4B5563;
+  --text-tertiary: #9CA3AF;
+  --text-inverse: #FFFFFF;
+  --border: rgba(0,0,0,0.07);
+  --border-strong: rgba(0,0,0,0.12);
+  --border-focus: rgba(99,102,241,0.5);
+  --accent: #6366F1;
+  --accent-dark: #4F46E5;
+  --accent-light: #EEF2FF;
+  --accent-glow: rgba(99,102,241,0.18);
+  --accent-rgb: 99,102,241;
+  --success: #10B981;
+  --success-light: #ECFDF5;
+  --warning: #F59E0B;
+  --warning-light: #FFFBEB;
+  --danger: #EF4444;
+  --danger-light: #FEF2F2;
+  --info: #3B82F6;
+  --info-light: #EFF6FF;
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.03);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.12);
+  --shadow-glow: 0 0 24px rgba(99,102,241,0.18);
+  --shadow-glow-lg: 0 0 48px rgba(99,102,241,0.25);
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-fast: 0.15s var(--ease-in-out);
+  --transition-normal: 0.25s var(--ease-out);
+  --transition-slow: 0.45s var(--ease-out);
+  --gradient-accent: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A78BFA 100%);
+  --gradient-warm: linear-gradient(135deg, #F59E0B, #EF4444);
+  --gradient-cool: linear-gradient(135deg, #06B6D4, #3B82F6);
+  --gradient-nature: linear-gradient(135deg, #10B981, #059669);
+  --gradient-bg: linear-gradient(180deg, #F5F6FA 0%, #E8EAF2 100%);
+  --nav-height: 68px;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #0B0D14;
+  --bg-secondary: #141620;
+  --bg-tertiary: #1E2030;
+  --bg-card: rgba(20,22,32,0.92);
+  --bg-card-solid: #141620;
+  --bg-glass: rgba(11,13,20,0.72);
+  --bg-glass-heavy: rgba(20,22,32,0.88);
+  --text-primary: #F1F3F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #475569;
+  --border: rgba(255,255,255,0.06);
+  --border-strong: rgba(255,255,255,0.1);
+  --border-focus: rgba(129,140,248,0.5);
+  --accent: #818CF8;
+  --accent-dark: #6366F1;
+  --accent-light: rgba(129,140,248,0.12);
+  --accent-glow: rgba(129,140,248,0.22);
+  --accent-rgb: 129,140,248;
+  --success-light: rgba(16,185,129,0.12);
+  --warning-light: rgba(245,158,11,0.12);
+  --danger-light: rgba(239,68,68,0.12);
+  --info-light: rgba(59,130,246,0.12);
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+  --shadow-xl: 0 24px 64px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 24px rgba(129,140,248,0.2);
+  --shadow-glow-lg: 0 0 48px rgba(129,140,248,0.3);
+  --gradient-bg: linear-gradient(180deg, #0B0D14 0%, #111320 100%);
+}
+
+/* ===== リセット & ベース ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--gradient-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  transition: background 0.4s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button { cursor: pointer; font-family: inherit; border: none; background: none; color: inherit; -webkit-tap-highlight-color: transparent; }
+input, textarea, select { font-family: inherit; color: inherit; -webkit-tap-highlight-color: transparent; }
+::selection { background: var(--accent); color: white; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--text-tertiary); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-secondary); }
+
+/* ===== オンボーディング ===== */
+.onboarding {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--gradient-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+.onboarding.hidden { opacity: 0; pointer-events: none; }
+.onboarding-content {
+  text-align: center;
+  max-width: 400px;
+  padding: 32px;
+  animation: floatIn 0.8s var(--ease-out);
+}
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.ob-logo {
+  width: 80px;
+  height: 80px;
+  background: var(--gradient-accent);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  margin: 0 auto 24px;
+  box-shadow: var(--shadow-glow-lg), var(--shadow-lg);
+  animation: logoGlow 3s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  from { box-shadow: var(--shadow-glow), var(--shadow-lg); }
+  to { box-shadow: var(--shadow-glow-lg), var(--shadow-xl); }
+}
+.ob-title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.ob-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+.ob-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.ob-countdown-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 12px 16px;
+  min-width: 72px;
+  box-shadow: var(--shadow-sm);
+}
+.ob-countdown-num {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.ob-countdown-label { font-size: 0.65rem; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.ob-start-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 40px;
+  background: var(--gradient-accent);
+  color: white;
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-radius: 999px;
+  box-shadow: var(--shadow-glow-lg), var(--shadow-md);
+  transition: all 0.3s var(--ease-spring);
+  letter-spacing: 0.02em;
+}
+.ob-start-btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: var(--shadow-glow-lg), var(--shadow-lg); }
+.ob-start-btn:active { transform: scale(0.97); }
+
+/* ===== レイアウト ===== */
+.app-wrap { display: none; }
+.app-wrap.visible { display: block; animation: fadeIn 0.5s ease; }
+.app-container { max-width: 680px; margin: 0 auto; padding: 0 16px; padding-bottom: calc(var(--nav-height) + 28px); }
+
+/* ===== ヘッダー ===== */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  background: var(--bg-glass-heavy);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 16px;
+  margin: 0 -16px;
+  transition: box-shadow 0.3s ease;
+}
+.header-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.app-logo { display: flex; align-items: center; gap: 10px; }
+.logo-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--gradient-accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: white;
+  box-shadow: var(--shadow-glow);
+  font-weight: 800;
+}
+.logo-text {
+  font-size: 1.15rem;
+  font-weight: 800;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-right { display: flex; align-items: center; gap: 6px; }
+.streak-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--warning-light);
+  color: #D97706;
+  font-weight: 700;
+  font-size: 0.82rem;
+  transition: all var(--transition-fast);
+}
+[data-theme="dark"] .streak-pill { color: var(--warning); }
+.streak-pill:hover { transform: scale(1.05); }
+.header-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+}
+.header-btn:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+
+/* ===== ボトムナビ ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  height: var(--nav-height);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  background: var(--bg-glass-heavy);
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.nav-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  padding: 0 4px;
+}
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  color: var(--text-tertiary);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  position: relative;
+}
+.nav-item .nav-icon {
+  font-size: 20px;
+  line-height: 1.2;
+  transition: transform 0.25s var(--ease-spring);
+}
+.nav-item.active { color: var(--accent); }
+.nav-item.active .nav-icon { transform: scale(1.15) translateY(-1px); }
+.nav-item:hover { color: var(--text-secondary); }
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 2.5px;
+  background: var(--accent);
+  border-radius: 0 0 4px 4px;
+}
+
+/* ===== ページ ===== */
+.page { display: none; padding-top: 20px; }
+.page.active { display: block; animation: pageIn 0.35s var(--ease-out); }
+@keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* ===== Sussex カウントダウンバナー ===== */
+.countdown-banner {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  position: relative;
+}
+.countdown-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-accent);
+}
+.countdown-left { flex: 1; }
+.countdown-title { font-size: 0.75rem; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
+.countdown-value { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+.countdown-value span { font-size: 0.8rem; font-weight: 500; color: var(--text-tertiary); }
+.countdown-ring {
+  width: 56px;
+  height: 56px;
+  position: relative;
+}
+.countdown-ring svg { transform: rotate(-90deg); }
+.countdown-ring-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ===== セクションタイトル ===== */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.section-title { font-size: 1.35rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.section-date { font-size: 0.8rem; color: var(--text-tertiary); font-weight: 500; }
+
+/* ===== プロンプトカード ===== */
+.prompt-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-xs);
+}
+.prompt-card:hover { box-shadow: var(--shadow-md); }
+.prompt-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+.prompt-card[data-cat="daily"]::before { background: var(--gradient-warm); }
+.prompt-card[data-cat="academic"]::before { background: var(--gradient-cool); }
+.prompt-card[data-cat="uk"]::before { background: var(--gradient-nature); }
+.prompt-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.prompt-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.cat-daily { background: var(--warning-light); color: #D97706; }
+.cat-academic { background: var(--info-light); color: var(--info); }
+.cat-uk { background: var(--success-light); color: var(--success); }
+[data-theme="dark"] .cat-daily { color: var(--warning); }
+.prompt-shuffle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-spring);
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+.prompt-shuffle:hover { background: var(--bg-tertiary); color: var(--text-primary); transform: rotate(180deg); }
+.prompt-text {
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+}
+.prompt-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+.prompt-tab {
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.prompt-tab:hover { background: var(--bg-tertiary); }
+.prompt-tab.active { background: var(--accent-light); color: var(--accent); border-color: rgba(var(--accent-rgb),0.3); }
+
+/* ===== Tip of the Day ===== */
+.tip-card {
+  background: var(--accent-light);
+  border: 1px solid rgba(var(--accent-rgb),0.15);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.tip-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.tip-text strong { color: var(--accent); font-weight: 600; }
+
+/* ===== エディター ===== */
+.editor-area {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.editor-area:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--accent-glow), var(--shadow-md);
+}
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-tertiary);
+}
+.toolbar-group { display: flex; align-items: center; gap: 6px; }
+.toolbar-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+}
+.toolbar-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.toolbar-btn.recording { color: var(--danger); animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(1.1); } }
+.toolbar-divider { width: 1px; height: 20px; background: var(--border); margin: 0 2px; }
+.word-badge {
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  padding: 3px 8px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-xs);
+}
+.timer-chip {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 4px 12px;
+  background: var(--accent-light);
+  border-radius: 999px;
+  min-width: 72px;
+  text-align: center;
+  transition: all var(--transition-fast);
+  border: 1px solid rgba(var(--accent-rgb),0.15);
+}
+.timer-chip.warning { color: #D97706; background: var(--warning-light); border-color: rgba(245,158,11,0.2); }
+.timer-chip.danger { color: var(--danger); background: var(--danger-light); border-color: rgba(239,68,68,0.2); animation: pulse 1s infinite; }
+#journal-input {
+  width: 100%;
+  min-height: 280px;
+  padding: 20px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-size: 1.02rem;
+  line-height: 1.9;
+  background: transparent;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+}
+#journal-input::placeholder { color: var(--text-tertiary); font-style: italic; }
+
+/* ===== ボタン ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  background: var(--gradient-accent);
+  color: white;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-glow), var(--shadow-sm);
+  transition: all 0.25s var(--ease-spring);
+  width: 100%;
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: var(--shadow-glow-lg), var(--shadow-md); }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.88rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+}
+.btn-secondary:hover { background: var(--bg-tertiary); box-shadow: var(--shadow-sm); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+.btn-ghost:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+.btn-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all var(--transition-fast);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.btn-icon:hover { background: var(--bg-tertiary); color: var(--text-primary); box-shadow: var(--shadow-sm); }
+
+/* ===== 履歴 ===== */
+.entry-list { display: flex; flex-direction: column; gap: 10px; }
+.entry-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: all 0.25s var(--ease-out);
+  position: relative;
+  box-shadow: var(--shadow-xs);
+}
+.entry-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); border-color: var(--border-strong); }
+.entry-card:active { transform: translateY(0); }
+.entry-date-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.entry-date { font-size: 0.78rem; color: var(--text-tertiary); font-weight: 600; }
+.entry-cat-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.entry-cat-dot.daily { background: var(--warning); }
+.entry-cat-dot.academic { background: var(--info); }
+.entry-cat-dot.uk { background: var(--success); }
+.entry-cat-dot.free { background: var(--text-tertiary); }
+.entry-preview {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.55;
+}
+.entry-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+.entry-meta-row span { display: flex; align-items: center; gap: 3px; }
+.entry-badge-row { position: absolute; top: 14px; right: 14px; display: flex; gap: 6px; }
+.badge-sm {
+  font-size: 0.65rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+.badge-corrected { background: var(--success-light); color: var(--success); }
+
+/* ===== 詳細 ===== */
+.entry-detail { display: none; }
+.entry-detail.active { display: block; animation: pageIn 0.3s var(--ease-out); }
+.detail-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.detail-actions { display: flex; gap: 6px; }
+.detail-body {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 24px;
+  line-height: 1.9;
+  font-size: 1.02rem;
+  white-space: pre-wrap;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.correction-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.correction-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-tertiary);
+}
+.correction-box-header h3 { font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+#correction-input {
+  width: 100%;
+  min-height: 140px;
+  padding: 16px 18px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  background: transparent;
+  color: var(--text-primary);
+}
+.correction-guide {
+  background: var(--accent-light);
+  border: 1px solid rgba(var(--accent-rgb),0.12);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* ===== Before/After ビュー ===== */
+.diff-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.diff-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-tertiary);
+}
+.diff-tab {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-tertiary);
+  transition: all var(--transition-fast);
+  position: relative;
+  cursor: pointer;
+}
+.diff-tab:hover { color: var(--text-secondary); }
+.diff-tab.active { color: var(--accent); background: var(--bg-card); }
+.diff-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent);
+}
+.diff-tab .tab-icon { margin-right: 4px; }
+.diff-panel { display: none; padding: 20px; }
+.diff-panel.active { display: block; animation: fadeIn 0.2s ease; }
+.diff-panel-content {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  color: var(--text-primary);
+}
+/* Before: 赤でハイライト */
+.diff-del {
+  background: var(--danger-light);
+  color: var(--danger);
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+/* After: 緑でハイライト */
+.diff-ins {
+  background: var(--success-light);
+  color: #059669;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+/* Enhanced: 全体がクリーンな仕上がりテキスト */
+.enhanced-text {
+  font-size: 1.02rem;
+  line-height: 1.9;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  position: relative;
+  padding-left: 16px;
+  border-left: 3px solid var(--accent);
+}
+.enhanced-text .corrected-part {
+  color: #059669;
+  background: rgba(16,185,129,0.1);
+  border-radius: 3px;
+  padding: 1px 3px;
+  font-weight: 600;
+}
+[data-theme="dark"] .enhanced-text .corrected-part {
+  color: #34D399;
+  background: rgba(52,211,153,0.15);
+}
+.enhanced-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+.enhanced-label.original { background: var(--bg-tertiary); color: var(--text-tertiary); }
+.enhanced-label.corrected { background: var(--success-light); color: var(--success); }
+.enhanced-label.enhanced { background: var(--accent-light); color: var(--accent); }
+/* 添削の改善ポイント一覧 */
+.correction-items { margin-top: 16px; }
+.correction-item {
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.correction-item:last-child { border-bottom: none; }
+.correction-item-arrow { color: var(--text-tertiary); flex-shrink: 0; margin-top: 2px; }
+.correction-item-before { color: var(--danger); }
+.correction-item-after { color: #059669; font-weight: 600; }
+.correction-item-note { font-size: 0.78rem; color: var(--text-tertiary); margin-top: 2px; }
+.no-correction-msg {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-tertiary);
+  font-size: 0.88rem;
+}
+.correction-guide-title { font-size: 0.82rem; font-weight: 700; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.correction-steps { list-style: none; counter-reset: step; }
+.correction-steps li {
+  counter-increment: step;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  padding: 4px 0;
+  padding-left: 28px;
+  position: relative;
+}
+.correction-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== 語彙 ===== */
+.vocab-form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.vocab-form-card .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.form-field label { display: block; font-size: 0.72rem; font-weight: 700; color: var(--text-tertiary); margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.form-input {
+  width: 100%;
+  padding: 9px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+.form-input:focus { border-color: var(--border-focus); box-shadow: 0 0 0 3px var(--accent-glow); }
+.vocab-search-bar {
+  position: relative;
+  margin-bottom: 14px;
+}
+.vocab-search-bar input {
+  width: 100%;
+  padding: 10px 12px 10px 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+}
+.vocab-search-bar input:focus { border-color: var(--border-focus); }
+.vocab-search-bar .search-icon { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 14px; color: var(--text-tertiary); }
+.vocab-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+}
+.vocab-card:hover { box-shadow: var(--shadow-sm); transform: translateY(-1px); }
+.vocab-word { font-size: 1rem; font-weight: 700; color: var(--accent); margin-bottom: 2px; }
+.vocab-meaning { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 6px; }
+.vocab-example { font-size: 0.82rem; color: var(--text-tertiary); font-style: italic; padding-left: 10px; border-left: 2px solid rgba(var(--accent-rgb),0.3); }
+.vocab-card-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.vocab-card-date { font-size: 0.7rem; color: var(--text-tertiary); }
+.vocab-cat-badge { display:inline-block; font-size:0.65rem; font-weight:700; padding:2px 8px; border-radius:999px; text-transform:uppercase; letter-spacing:0.04em; }
+.vocab-cat-badge.mistake { background:var(--danger-light); color:var(--danger); }
+.vocab-cat-badge.better { background:var(--success-light); color:var(--success); }
+.vocab-cat-badge.jpen { background:var(--info-light); color:var(--info); }
+.kb-stat-chip { flex:1; padding:10px; border-radius:var(--radius-md); text-align:center; background:var(--bg-card); border:2px solid var(--border); cursor:pointer; transition:all 0.2s; }
+.kb-stat-chip:hover { border-color: var(--text-tertiary); }
+.kb-stat-chip.active { border-color: var(--accent); background: var(--accent-light); }
+.kb-stat-num { font-size:1.3rem; font-weight:800; }
+.kb-stat-label { font-size:0.65rem; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.04em; }
+
+/* ===== ボキャブラリクイズ ===== */
+.quiz-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+  box-shadow: var(--shadow-xs);
+}
+.quiz-title { font-size: 0.82rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+.quiz-word { font-size: 1.5rem; font-weight: 800; color: var(--accent); margin-bottom: 16px; }
+.quiz-input-wrap { margin-bottom: 14px; }
+.quiz-input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px 14px;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+.quiz-input:focus { border-color: var(--accent); }
+.quiz-input.correct { border-color: var(--success); background: var(--success-light); }
+.quiz-input.wrong { border-color: var(--danger); background: var(--danger-light); }
+.quiz-result { font-size: 0.9rem; font-weight: 600; margin-bottom: 10px; min-height: 24px; }
+.quiz-actions { display: flex; gap: 8px; justify-content: center; }
+.quiz-score { font-size: 0.8rem; color: var(--text-tertiary); margin-top: 10px; }
+
+/* ===== ダッシュボード ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  text-align: center;
+  transition: all 0.25s var(--ease-spring);
+  box-shadow: var(--shadow-xs);
+}
+.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.stat-icon { font-size: 22px; margin-bottom: 4px; }
+.stat-value { font-size: 1.6rem; font-weight: 800; color: var(--text-primary); font-variant-numeric: tabular-nums; line-height: 1.2; }
+.stat-label { font-size: 0.68rem; color: var(--text-tertiary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-xs);
+}
+.chart-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+/* ヒートマップ */
+.heatmap-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; margin-bottom: 3px; }
+.heatmap-days span { font-size: 0.6rem; color: var(--text-tertiary); text-align: center; font-weight: 600; }
+.heatmap-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.hm-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--bg-tertiary);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+.hm-cell:hover { transform: scale(1.3); z-index: 1; }
+.hm-cell.l1 { background: rgba(var(--accent-rgb),0.2); }
+.hm-cell.l2 { background: rgba(var(--accent-rgb),0.4); }
+.hm-cell.l3 { background: rgba(var(--accent-rgb),0.6); }
+.hm-cell.l4 { background: rgba(var(--accent-rgb),0.85); }
+.hm-cell.future { opacity: 0.25; }
+/* 棒グラフ */
+.bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 100px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
+.bar-fill {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  background: var(--gradient-accent);
+  min-height: 2px;
+  transition: height 0.5s var(--ease-out);
+  position: relative;
+}
+.bar-fill.empty { background: var(--bg-tertiary); }
+.bar-fill:hover { opacity: 0.85; }
+.bar-label { font-size: 0.58rem; color: var(--text-tertiary); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ===== 設定 ===== */
+.settings-group { margin-bottom: 20px; }
+.settings-group-label { font-size: 0.72rem; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; padding-left: 2px; }
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 6px;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-xs);
+}
+.settings-row:hover { box-shadow: var(--shadow-sm); }
+.settings-row-left { display: flex; align-items: center; gap: 12px; }
+.settings-row-icon { font-size: 18px; }
+.settings-row-label { font-weight: 600; font-size: 0.88rem; }
+.settings-row-desc { font-size: 0.72rem; color: var(--text-tertiary); }
+.toggle-switch {
+  width: 44px;
+  height: 24px;
+  background: var(--bg-tertiary);
+  border-radius: 12px;
+  position: relative;
+  transition: background var(--transition-fast);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.toggle-switch.on { background: var(--accent); border-color: var(--accent); }
+.toggle-switch::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.2s var(--ease-spring);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle-switch.on::after { transform: translateX(20px); }
+.settings-select {
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  outline: none;
+}
+
+/* ===== トースト ===== */
+.toast-wrap { position: fixed; top: 76px; left: 50%; transform: translateX(-50%); z-index: 999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.toast {
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+  animation: toastIn 0.3s var(--ease-out);
+  white-space: nowrap;
+}
+@keyframes toastIn { from { opacity: 0; transform: translateY(-12px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes toastOut { to { opacity: 0; transform: translateY(-8px) scale(0.95); } }
+
+/* ===== モーダル ===== */
+.modal-bg {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  z-index: 300;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-bg.open { display: flex; }
+.modal-box {
+  background: var(--bg-card-solid);
+  border-radius: var(--radius-2xl);
+  padding: 24px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: modalPop 0.3s var(--ease-spring);
+}
+@keyframes modalPop { from { opacity: 0; transform: scale(0.92) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-box h2 { font-size: 1.15rem; margin-bottom: 8px; }
+.modal-box p { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 20px; line-height: 1.5; }
+.modal-btns { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* ===== Confetti ===== */
+.confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+.confetti-piece {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall 3s var(--ease-out) forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== Empty States ===== */
+.empty-state { text-align: center; padding: 40px 20px; }
+.empty-icon { font-size: 42px; margin-bottom: 10px; }
+.empty-title { font-size: 1.05rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 4px; }
+.empty-desc { font-size: 0.85rem; color: var(--text-tertiary); max-width: 260px; margin: 0 auto; }
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 480px) {
+  .stats-grid { gap: 8px; }
+  .stat-value { font-size: 1.3rem; }
+  .vocab-form-card .form-grid { grid-template-columns: 1fr; }
+  #journal-input { min-height: 220px; font-size: 0.95rem; padding: 16px; }
+  .prompt-text { font-size: 1rem; }
+  .ob-countdown { gap: 10px; }
+  .ob-countdown-num { font-size: 1.5rem; }
+  .countdown-banner { flex-direction: column; text-align: center; gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== オンボーディング ===== -->
+<div class="onboarding" id="onboarding">
+  <div class="onboarding-content">
+    <div class="ob-logo">F</div>
+    <div class="ob-title">FluentInk</div>
+    <div class="ob-subtitle">
+      Sussex 大学院留学に向けて<br>毎日15分の英語ジャーナリング
+    </div>
+    <div class="ob-countdown" id="ob-countdown"></div>
+    <button class="ob-start-btn" onclick="dismissOnboarding()">
+      Start Journaling
+      <span style="font-size:1.2em">→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ===== メインアプリ ===== -->
+<div class="app-wrap" id="app-wrap">
+
+  <!-- ヘッダー -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="app-logo" onclick="goPage('write')" style="cursor:pointer" role="button" aria-label="ホームに戻る">
+        <div class="logo-icon">F</div>
+        <span class="logo-text">FluentInk</span>
+      </div>
+      <div class="header-right">
+        <div class="streak-pill" id="streak-pill" style="display:none">
+          <span>🔥</span>
+          <span id="streak-num">0</span>
+        </div>
+        <button class="header-btn" id="theme-btn" onclick="toggleTheme()" title="テーマ切替">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- トースト -->
+  <div class="toast-wrap" id="toast-wrap"></div>
+
+  <main class="app-container">
+
+    <!-- ===== Write ===== -->
+    <div class="page active" id="page-write">
+      <!-- カウントダウン -->
+      <div class="countdown-banner" id="countdown-banner">
+        <div class="countdown-left">
+          <div class="countdown-title">Sussex 留学まで</div>
+          <div class="countdown-value" id="cd-value">--- <span>days</span></div>
+        </div>
+        <div class="countdown-ring">
+          <svg width="56" height="56" viewBox="0 0 56 56">
+            <circle cx="28" cy="28" r="24" fill="none" stroke="var(--bg-tertiary)" stroke-width="4"/>
+            <circle id="cd-ring" cx="28" cy="28" r="24" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="0"/>
+          </svg>
+          <div class="countdown-ring-text" id="cd-pct"></div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <div class="section-title">✍️ Today's Journal</div>
+        <div class="section-date" id="today-label"></div>
+      </div>
+
+      <!-- Tip -->
+      <div class="tip-card" id="tip-card">
+        <span class="tip-icon">💡</span>
+        <div class="tip-text" id="tip-text"></div>
+      </div>
+
+      <!-- プロンプト -->
+      <div class="prompt-card" id="prompt-card" data-cat="daily">
+        <div class="prompt-top">
+          <span class="prompt-category cat-daily" id="prompt-badge">🌅 Daily</span>
+          <button class="prompt-shuffle" onclick="shufflePrompt()" title="別のお題">🔀</button>
+        </div>
+        <div class="prompt-text" id="prompt-text"></div>
+        <div class="prompt-tabs">
+          <button class="prompt-tab active" data-cat="daily" onclick="setCat('daily')">🌅 Daily</button>
+          <button class="prompt-tab" data-cat="academic" onclick="setCat('academic')">📚 Academic</button>
+          <button class="prompt-tab" data-cat="uk" onclick="setCat('uk')">🇬🇧 UK Life</button>
+          <button class="prompt-tab" data-cat="free" onclick="setCat('free')">✏️ Free Write</button>
+        </div>
+      </div>
+
+      <!-- エディター -->
+      <div class="editor-area">
+        <div class="editor-toolbar">
+          <div class="toolbar-group">
+            <div class="timer-chip" id="timer-chip">15:00</div>
+            <button class="toolbar-btn" id="timer-btn" onclick="toggleTimer()" title="開始/停止">▶️</button>
+            <button class="toolbar-btn" onclick="resetTimer()" title="リセット">↩️</button>
+          </div>
+          <div class="toolbar-group">
+            <button class="toolbar-btn" id="mic-btn" onclick="toggleMic()" title="音声入力" aria-label="音声入力" style="display:none">🎤</button>
+            <button class="toolbar-btn" id="lang-btn" onclick="toggleSpeechLang()" title="音声言語切替 (EN/日英)" aria-label="音声言語切替" style="display:none;font-size:12px;font-weight:700">EN</button>
+            <div class="toolbar-divider" id="mic-divider" style="display:none"></div>
+            <span class="word-badge" id="word-badge">0 words</span>
+          </div>
+        </div>
+        <textarea id="journal-input" maxlength="15000" placeholder="Start writing in English... Don't overthink it — just let your thoughts flow freely."></textarea>
+      </div>
+
+      <button class="btn-primary" onclick="saveEntry()">💾 Save Entry</button>
+    </div>
+
+    <!-- ===== History ===== -->
+    <div class="page" id="page-history">
+      <div class="section-header">
+        <div class="section-title">📖 History</div>
+      </div>
+      <div id="history-list-view">
+        <div class="entry-list" id="entry-list"></div>
+        <div class="empty-state" id="history-empty" style="display:none">
+          <div class="empty-icon">📝</div>
+          <div class="empty-title">まだエントリーがありません</div>
+          <div class="empty-desc">「Write」タブから最初のジャーナルを書いてみましょう</div>
+        </div>
+      </div>
+      <div class="entry-detail" id="entry-detail">
+        <div class="detail-nav">
+          <button class="btn-ghost" onclick="closeDetail()">← 一覧に戻る</button>
+          <div class="detail-actions">
+            <button class="btn-icon" onclick="reRunAutoCorrect()" title="再添削（LanguageTool）">🔄</button>
+            <button class="btn-icon" onclick="copyCorrection()" title="Claude.aiで深い添削">📋</button>
+            <button class="btn-icon" onclick="editEntry()" title="編集">✏️</button>
+            <button class="btn-icon" onclick="deleteEntry()" style="color:var(--danger)" title="削除">🗑️</button>
+          </div>
+        </div>
+        <div class="entry-date" id="detail-date" style="margin-bottom:4px"></div>
+        <div class="entry-meta-row" id="detail-meta" style="margin-bottom:14px"></div>
+        <!-- Before / After / Enhanced タブビュー -->
+        <div class="diff-container">
+          <div class="diff-tabs">
+            <button class="diff-tab active" onclick="switchDiffTab('original')"><span class="tab-icon">📄</span> Original</button>
+            <button class="diff-tab" onclick="switchDiffTab('diff')"><span class="tab-icon">🔄</span> Before/After</button>
+            <button class="diff-tab" onclick="switchDiffTab('enhanced')"><span class="tab-icon">✨</span> Enhanced</button>
+          </div>
+          <div class="diff-panel active" id="panel-original">
+            <div class="enhanced-label original">Original Entry</div>
+            <div class="diff-panel-content" id="detail-body"></div>
+          </div>
+          <div class="diff-panel" id="panel-diff">
+            <div id="diff-content">
+              <div class="no-correction-msg" id="no-diff-msg">
+                📋 まだ添削がありません。<br>保存時に自動添削されます。🔄ボタンで手動実行も可能です。
+              </div>
+              <div id="diff-items" style="display:none"></div>
+            </div>
+          </div>
+          <div class="diff-panel" id="panel-enhanced">
+            <div id="enhanced-content">
+              <div class="no-correction-msg" id="no-enhanced-msg">
+                ✨ 添削後のクリーンなテキストがここに表示されます。<br>自動添削完了後に表示されます。
+              </div>
+              <div id="enhanced-text-area" style="display:none">
+                <div class="enhanced-label enhanced">Enhanced Version</div>
+                <div class="enhanced-text" id="enhanced-text"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 添削メモ入力 -->
+        <div class="correction-guide">
+          <div class="correction-guide-title">🤖 添削の仕組み</div>
+          <ol class="correction-steps" id="correction-guide-steps">
+            <li>Saveすると添削プロンプトが自動コピーされ、Claude.aiが開きます</li>
+            <li>Claude.aiに貼り付け（Ctrl+V）→ 添削結果を取得</li>
+            <li>結果を下の「添削メモ」に貼り付けて「保存 & 解析」</li>
+          </ol>
+        </div>
+        <div class="correction-box">
+          <div class="correction-box-header">
+            <h3>📝 添削メモ</h3>
+            <div style="display:flex;gap:6px">
+              <button class="btn-secondary" onclick="parseCorrectionAndSave()" style="padding:5px 12px;font-size:0.78rem">保存 & 解析</button>
+            </div>
+          </div>
+          <textarea id="correction-input" placeholder="自動添削の結果がここに表示されます。&#10;Claude.ai で深い添削をした場合は、結果をここに貼り付けて「保存 &amp; 解析」をクリック。"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Vocab ===== -->
+    <div class="page" id="page-vocab">
+      <div class="section-header">
+        <div class="section-title">📚 Knowledge Base</div>
+        <div style="font-size:0.75rem;color:var(--text-tertiary)">添削から自動で蓄積</div>
+      </div>
+
+      <!-- 統計バー -->
+      <div style="display:flex;gap:8px;margin-bottom:16px" id="kb-stats"></div>
+
+      <!-- カテゴリタブは統計バーに統合 -->
+
+      <!-- クイズ -->
+      <div class="quiz-section" id="quiz-section" style="display:none">
+        <div class="quiz-title">Knowledge Quiz</div>
+        <div class="quiz-word" id="quiz-word"></div>
+        <div class="quiz-input-wrap">
+          <input type="text" class="quiz-input" id="quiz-input" placeholder="正しい表現を入力..." onkeydown="if(event.key==='Enter')checkQuiz()">
+        </div>
+        <div class="quiz-result" id="quiz-result"></div>
+        <div class="quiz-actions">
+          <button class="btn-secondary" onclick="checkQuiz()">チェック</button>
+          <button class="btn-secondary" onclick="nextQuiz()">次 →</button>
+        </div>
+        <div class="quiz-score" id="quiz-score"></div>
+      </div>
+
+      <!-- アクション -->
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <button class="btn-secondary" onclick="startQuiz()" id="quiz-start-btn" style="display:none;flex:1;font-size:0.82rem">🎯 Quiz</button>
+      </div>
+
+      <!-- 検索 -->
+      <div class="vocab-search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="vocab-search" placeholder="検索..." oninput="renderVocab()">
+      </div>
+
+      <div id="vocab-list"></div>
+      <div class="empty-state" id="vocab-empty" style="display:none">
+        <div class="empty-icon">📖</div>
+        <div class="empty-title">まだナレッジがありません</div>
+        <div class="empty-desc">ジャーナルを書いて添削すると自動で蓄積されます</div>
+      </div>
+    </div>
+
+    <!-- ===== Dashboard ===== -->
+    <div class="page" id="page-stats">
+      <div class="section-header">
+        <div class="section-title">📊 Dashboard</div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-value" id="s-streak">0</div><div class="stat-label">Streak</div></div>
+        <div class="stat-card"><div class="stat-icon">📝</div><div class="stat-value" id="s-entries">0</div><div class="stat-label">Entries</div></div>
+        <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-value" id="s-words">0</div><div class="stat-label">Total Words</div></div>
+        <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-value" id="s-vocab">0</div><div class="stat-label">Vocabulary</div></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">📅 Activity (12 Weeks)</div>
+        <div class="heatmap-days"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+        <div class="heatmap-grid" id="heatmap"></div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">📈 Words / Day (14 Days)</div>
+        <div class="bar-chart" id="bar-chart"></div>
+      </div>
+
+      <div style="display:flex;gap:8px">
+        <button class="btn-secondary" onclick="copyWeeklyReview()" style="flex:1">📋 週次レビューをコピー</button>
+      </div>
+    </div>
+
+    <!-- ===== Settings ===== -->
+    <div class="page" id="page-settings">
+      <div class="section-header">
+        <div class="section-title">⚙️ Settings</div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">アプリ設定</div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">🌙</span>
+            <div><div class="settings-row-label">ダークモード</div><div class="settings-row-desc">目に優しいダークテーマ</div></div>
+          </div>
+          <button class="toggle-switch" id="dark-toggle" onclick="toggleTheme()"></button>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">⏱️</span>
+            <div><div class="settings-row-label">タイマー (分)</div><div class="settings-row-desc">制限時間の設定</div></div>
+          </div>
+          <select class="settings-select" id="timer-select" onchange="setTimerMinutes()">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15" selected>15</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+          </select>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">📅</span>
+            <div><div class="settings-row-label">留学開始日</div><div class="settings-row-desc">カウントダウンの目標日</div></div>
+          </div>
+          <input type="date" class="settings-select" id="target-date" value="2026-09-21" onchange="saveTargetDate()" style="font-family:var(--font-sans)">
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">AI添削（Claude API）</div>
+        <div class="settings-row" style="flex-direction:column;align-items:stretch;gap:8px">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">🤖</span>
+            <div>
+              <div class="settings-row-label">Claude API Key</div>
+              <div class="settings-row-desc">日本語混じりの翻訳＋自然な英語への添削。Haiku使用で1回約0.5円</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <input type="password" id="api-key-input" placeholder="sk-ant-api03-..." style="flex:1;padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-primary);font-size:0.82rem;font-family:var(--font-mono)">
+            <button class="btn-secondary" onclick="saveApiKey()" style="padding:8px 14px;font-size:0.78rem;white-space:nowrap">保存</button>
+          </div>
+          <div id="api-key-status" style="font-size:0.72rem;color:var(--text-tertiary)"></div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">🧠</span>
+            <div>
+              <div class="settings-row-label">添削モデル</div>
+              <div class="settings-row-desc">精度 vs コスト（Haikuが最安）</div>
+            </div>
+          </div>
+          <select class="settings-select" id="ai-model-select" onchange="saveAiModel()">
+            <option value="claude-haiku-4-5-20251001">Haiku 4.5 (最安)</option>
+            <option value="claude-sonnet-4-5-20250514">Sonnet 4.5</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">データ管理</div>
+        <div class="settings-row" style="cursor:pointer" onclick="exportJSON()">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">📤</span>
+            <div><div class="settings-row-label">エクスポート</div><div class="settings-row-desc">JSON形式でバックアップ</div></div>
+          </div>
+          <span style="color:var(--text-tertiary)">→</span>
+        </div>
+        <div class="settings-row" style="cursor:pointer" onclick="document.getElementById('import-file').click()">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">📥</span>
+            <div><div class="settings-row-label">インポート</div><div class="settings-row-desc">バックアップから復元</div></div>
+          </div>
+          <span style="color:var(--text-tertiary)">→</span>
+        </div>
+        <input type="file" id="import-file" accept=".json" style="display:none" onchange="importJSON(event)">
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-label">情報</div>
+        <div class="settings-row">
+          <div class="settings-row-left">
+            <span class="settings-row-icon">ℹ️</span>
+            <div><div class="settings-row-label">FluentInk v2.0</div><div class="settings-row-desc">Sussex大学院留学準備ジャーナリングアプリ</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ナビ -->
+  <nav class="bottom-nav">
+    <div class="nav-inner">
+      <button class="nav-item active" data-page="write" onclick="goPage('write')"><span class="nav-icon">✍️</span><span>Write</span></button>
+      <button class="nav-item" data-page="history" onclick="goPage('history')"><span class="nav-icon">📖</span><span>History</span></button>
+      <button class="nav-item" data-page="vocab" onclick="goPage('vocab')"><span class="nav-icon">📚</span><span>Vocab</span></button>
+      <button class="nav-item" data-page="stats" onclick="goPage('stats')"><span class="nav-icon">📊</span><span>Stats</span></button>
+      <button class="nav-item" data-page="settings" onclick="goPage('settings')"><span class="nav-icon">⚙️</span><span>Settings</span></button>
+    </div>
+  </nav>
+</div>
+
+<!-- モーダル -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal-box"><h2 id="m-title"></h2><p id="m-body"></p><div class="modal-btns" id="m-btns"></div></div>
+</div>
+
+<!-- Confetti container -->
+<div class="confetti-container" id="confetti-box"></div>
+
+<script>
+// ================================================================
+// FluentInk v2.0 — Complete JavaScript
+// ================================================================
+
+// ===== プロンプトDB =====
+const PROMPTS = {
+  daily: [
+    "What was the best part of your day and why?",
+    "If you could change one thing about today, what would it be?",
+    "Describe a conversation you had recently. What would you say differently?",
+    "What is something new you learned this week?",
+    "What are three things you're grateful for today?",
+    "Describe your morning routine as if explaining it to a new friend.",
+    "What was the most challenging thing you did today?",
+    "If you could have dinner with anyone tonight, who and why?",
+    "What is a habit you'd like to build or break?",
+    "Describe your favourite place to relax. What makes it special?",
+    "What advice would you give your younger self?",
+    "Write about a recent news story that caught your attention.",
+    "What does your ideal day off look like?",
+    "Describe a skill you'd like to master and why.",
+    "What is something that made you laugh recently?",
+    "If you could live in any city for a year, where would it be?",
+    "Write about a book, film, or show you recently enjoyed.",
+    "What technology will change our lives in the next decade?",
+    "Describe a tradition in your family or culture.",
+    "What would you do if you had an extra hour every day?",
+    "Write about a time you stepped out of your comfort zone.",
+    "What qualities do you value most in a friend?",
+    "Describe your workspace. How could you improve it?",
+    "What is a common misconception about Japan?",
+    "If you could become fluent in another language instantly, which?",
+    "Write about a goal you're currently working towards.",
+    "What does success mean to you?",
+    "Describe your favourite season and what you love about it.",
+    "What is one thing you wish more people understood?",
+    "Write about a moment that changed your perspective on something.",
+    "What are you looking forward to this week?",
+    "Describe the last meal you really enjoyed.",
+    "What is something you've been putting off? Why?"
+  ],
+  academic: [
+    "Should developing countries prioritise growth or environment?",
+    "How has globalisation changed media consumption in Japan?",
+    "What policy could reduce income inequality in Japan?",
+    "Discuss the pros and cons of FDI for developing economies.",
+    "How might climate change affect global supply chains?",
+    "Is free trade always beneficial for developing nations?",
+    "How do multinational corporations influence local cultures?",
+    "What role should international organisations play in reducing poverty?",
+    "Discuss the relationship between education and development.",
+    "How does migration contribute to or challenge globalisation?",
+    "Should governments regulate big tech companies more strictly?",
+    "How has COVID-19 reshaped global business practices?",
+    "What are the ethical implications of fast fashion?",
+    "How can SDGs be achieved in practice?",
+    "Discuss the impact of digital currencies on international trade.",
+    "What is the role of NGOs in global development?",
+    "How does gender inequality affect economic growth?",
+    "Should wealthy nations bear more responsibility for climate action?",
+    "How has remote work changed the global labour market?",
+    "What are the challenges of measuring development beyond GDP?",
+    "How do trade wars affect ordinary citizens?",
+    "Discuss 'brain drain' and its impact on developing countries.",
+    "Is microfinance effective for poverty reduction?",
+    "How can technology bridge urban-rural development gaps?",
+    "What lessons can Japan offer about ageing societies?",
+    "How do cultural differences affect international negotiations?",
+    "Discuss the tension between sovereignty and global governance.",
+    "What is the future of the World Trade Organisation?",
+    "How does corruption hinder development in emerging economies?",
+    "Should there be a global minimum corporate tax rate?",
+    "How do remittances impact developing economies?",
+    "Discuss the role of social media in political movements globally."
+  ],
+  uk: [
+    "What are you most excited about regarding life in Brighton?",
+    "How will you introduce yourself on the first day of your course?",
+    "What challenges do you anticipate in academic discussions?",
+    "Describe your ideal weekend routine in the UK.",
+    "What British food or drink are you curious to try?",
+    "How do you plan to make friends at university?",
+    "What differences do you expect between Japanese and British uni culture?",
+    "Describe what you know about Sussex and the south of England.",
+    "What British customs are you most curious about?",
+    "How will you manage homesickness while abroad?",
+    "What do you hope to learn from international classmates?",
+    "How will you prepare for British weather?",
+    "What about UK culture surprises you?",
+    "How will you balance studying and exploring the UK?",
+    "What would you visit in the UK outside Brighton?",
+    "How might living abroad change your perspective on Japan?",
+    "What academic resources at Sussex are you excited to use?",
+    "Describe a scenario: asking for directions in Brighton.",
+    "What British English expressions would you like to learn?",
+    "How will you handle group projects with diverse students?",
+    "What will be hardest about adjusting to UK life?",
+    "Describe your plan for improving English while in Brighton.",
+    "What would you tell a friend considering UK study?",
+    "How will your course help your future career?",
+    "What kind of part-time work might you do in the UK?",
+    "Describe a typical weekday at Sussex.",
+    "What do you know about the University of Sussex's history?",
+    "How would you explain Japanese culture to a British classmate?",
+    "What British TV show or film should you watch before arriving?",
+    "Write a self-introduction for a university social event.",
+    "What's one thing you want to accomplish in your first week in the UK?",
+    "Describe Brighton as you imagine it right now."
+  ]
+};
+
+const TIPS = [
+  {text: '<strong>"What strikes me is..."</strong> — 意見を述べるとき自然で学術的。 "I think" の代わりに使ってみて', cat: 'expression'},
+  {text: '<strong>"Having said that..."</strong> — 前の文に反論を加えるフレーズ。ディスカッションで超便利', cat: 'expression'},
+  {text: '<strong>15分の制限時間は守ろう</strong> — 完璧さより流暢さ。止まらずに書き続けるのがスピーキングへの近道', cat: 'method'},
+  {text: '<strong>"tend to"</strong> を使ってみよう — "Japanese people tend to..." のように傾向を述べるとアカデミックに', cat: 'expression'},
+  {text: '<strong>音声入力で書いてみて</strong> — 実際に口に出すとスピーキングの直接的なトレーニングに', cat: 'method'},
+  {text: '<strong>"It goes without saying that..."</strong> — 「言うまでもなく」。エッセイでもスピーキングでも使える', cat: 'expression'},
+  {text: '<strong>添削で指摘された表現は翌日に使おう</strong> — 学んだ直後に使うと3倍定着する', cat: 'method'},
+  {text: '<strong>"To put it simply..."</strong> — 複雑な話を要約するとき。プレゼンで重宝するフレーズ', cat: 'expression'},
+  {text: '<strong>"on the other hand"</strong> の代わりに <strong>"conversely"</strong> を使うとアカデミック度UP', cat: 'expression'},
+  {text: '<strong>今日は接続詞を意識しよう</strong> — however, moreover, nevertheless... 文をつなぐ力 = スピーキング力', cat: 'method'},
+  {text: '<strong>"I would argue that..."</strong> — 自分の主張を述べるとき。直接的すぎず、学術的', cat: 'expression'},
+  {text: '<strong>書いた後に音読しよう</strong> — 自分の英文を声に出すと発音・リズム・イントネーションも鍛えられる', cat: 'method'},
+  {text: '<strong>"take into account"</strong> — "考慮に入れる"。consider より少し格調高い表現', cat: 'expression'},
+  {text: '<strong>"as far as I\'m concerned"</strong> — 「私に関して言えば」。意見を述べるときの定番', cat: 'expression'},
+  {text: '<strong>今日はフリーライティングにしてみよう</strong> — お題なしで頭に浮かんだことを英語で。即興力が上がる', cat: 'method'},
+  {text: '<strong>"It is worth noting that..."</strong> — 重要な点を強調するとき。論文でもスピーチでも', cat: 'expression'},
+  {text: '<strong>"in terms of"</strong> — 「〜の観点から」。範囲を限定するときに便利', cat: 'expression'},
+  {text: '<strong>同じ単語を3回以上使わない</strong>ルールを試してみよう — 語彙の幅を広げる練習に', cat: 'method'},
+  {text: '<strong>"That being said..."</strong> — 前述の内容を認めつつ、別の視点を加えるフレーズ', cat: 'expression'},
+  {text: '<strong>"shed light on"</strong> — 「光を当てる、明らかにする」。学術的な文脈でよく使う', cat: 'expression'},
+];
+
+const CORRECTION_PROMPT = `You are an English tutor. Fix this journal entry from a Japanese learner.
+
+Rules:
+- Translate ALL Japanese words/phrases into natural English
+- Fix grammar and awkward phrasing
+- Suggest more natural expressions even if grammar is correct
+- Keep the casual diary tone
+
+Format your response EXACTLY like this:
+
+**Corrections:**
+❌ original phrase → ✅ corrected phrase
+❌ original phrase → ✅ corrected phrase
+(list all corrections, no explanations needed)
+
+**Enhanced version:**
+(the full corrected text with all fixes applied. Mark changed parts in **bold**)
+
+---
+JOURNAL ENTRY:
+`;
+
+const WEEKLY_PROMPT = `You are an English tutor for a Japanese grad student (IELTS Speaking 6.0, heading to Sussex for Globalization, Business and Development).
+
+Here are their journal entries from this week. Please:
+1. Identify 3 recurring grammar/vocabulary patterns to focus on
+2. Note any improvement from earlier in the week
+3. Suggest a speaking exercise for next week
+4. Compile a "Week Vocabulary List" of 10 important expressions
+
+---
+`;
+
+// ===== IndexedDB =====
+const DB='FluentInkDB2'; const DBV=1; let db;
+function openDB(){return new Promise((ok,ng)=>{const r=indexedDB.open(DB,DBV);r.onupgradeneeded=e=>{const d=e.target.result;if(!d.objectStoreNames.contains('entries')){const s=d.createObjectStore('entries',{keyPath:'id',autoIncrement:true});s.createIndex('date','date');}if(!d.objectStoreNames.contains('vocab'))d.createObjectStore('vocab',{keyPath:'id',autoIncrement:true});};r.onsuccess=e=>{db=e.target.result;ok(db);};r.onerror=e=>ng(e);})}
+function dbPut(s,d){return new Promise((ok,ng)=>{const t=db.transaction(s,'readwrite');t.objectStore(s).put(d).onsuccess=e=>ok(e.target.result);t.onerror=e=>ng(e);})}
+function dbAll(s){return new Promise((ok,ng)=>{const t=db.transaction(s);t.objectStore(s).getAll().onsuccess=e=>ok(e.target.result);t.onerror=e=>ng(e);})}
+function dbDel(s,k){return new Promise((ok,ng)=>{const t=db.transaction(s,'readwrite');t.objectStore(s).delete(k).onsuccess=()=>ok();t.onerror=e=>ng(e);})}
+
+// ===== 状態 =====
+let entries=[], vocab=[];
+let curCat='daily', promptIdx=0, freeMode=false;
+let timerSec=15*60, timerInt=null, timerOn=false, timerMin=15;
+let detailId=null;
+let recognition=null, recording=false;
+let quizItems=[], quizIdx=0, quizCorrect=0, quizTotal=0;
+
+// ===== ユーティリティ =====
+const $=id=>document.getElementById(id);
+const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML;};
+function dateKey(d=new Date()){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function fmtDate(s){return new Date(s+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric',weekday:'short'});}
+function fmtTime(iso){if(!iso)return'';const d=new Date(iso);return d.toLocaleTimeString('ja-JP',{hour:'2-digit',minute:'2-digit'});}
+function countWords(t){t=t.trim();return t?t.split(/\s+/).length:0;}
+
+// ===== ページ遷移 =====
+function goPage(p,skipCloseDetail=false){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  $(`page-${p}`).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${p}"]`).classList.add('active');
+  if(p==='history'){loadEntries();if(!skipCloseDetail)closeDetail();}
+  if(p==='vocab')loadVocab();
+  if(p==='stats')loadStats();
+}
+
+// ===== テーマ =====
+function initTheme(){
+  const s=localStorage.getItem('fi-theme');
+  if(s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)){
+    document.documentElement.setAttribute('data-theme','dark');
+    $('dark-toggle').classList.add('on');
+    $('theme-btn').textContent='☀️';
+  }
+}
+function toggleTheme(){
+  const dark=document.documentElement.getAttribute('data-theme')==='dark';
+  if(dark){document.documentElement.removeAttribute('data-theme');localStorage.setItem('fi-theme','light');$('dark-toggle').classList.remove('on');$('theme-btn').textContent='🌙';}
+  else{document.documentElement.setAttribute('data-theme','dark');localStorage.setItem('fi-theme','dark');$('dark-toggle').classList.add('on');$('theme-btn').textContent='☀️';}
+}
+
+// ===== トースト =====
+function toast(msg,icon='✓',duration=3500){const t=document.createElement('div');t.className='toast';t.innerHTML=`<span>${icon}</span>${msg}`;$('toast-wrap').appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateY(-8px)';setTimeout(()=>t.remove(),300);},duration);}
+
+// ===== モーダル =====
+function modal(title,body,actions){
+  $('m-title').textContent=title;$('m-body').textContent=body;
+  const d=$('m-btns');d.innerHTML='';
+  actions.forEach(a=>{const b=document.createElement('button');b.className=a.primary?'btn-primary':'btn-secondary';b.style.width='auto';b.textContent=a.label;b.onclick=()=>{a.fn();$('modal-bg').classList.remove('open');};d.appendChild(b);});
+  $('modal-bg').classList.add('open');
+}
+
+// ===== Confetti =====
+function fireConfetti(){
+  const box=$('confetti-box');const colors=['#6366F1','#F59E0B','#10B981','#EF4444','#3B82F6','#8B5CF6','#EC4899'];
+  for(let i=0;i<60;i++){const p=document.createElement('div');p.className='confetti-piece';p.style.left=Math.random()*100+'%';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDelay=Math.random()*0.5+'s';p.style.animationDuration=(2+Math.random()*2)+'s';p.style.width=(6+Math.random()*8)+'px';p.style.height=(6+Math.random()*8)+'px';box.appendChild(p);}
+  setTimeout(()=>box.innerHTML='',4000);
+}
+
+// ===== カウントダウン =====
+function updateCountdown(){
+  const target=localStorage.getItem('fi-target')||'2026-09-21';
+  $('target-date').value=target;
+  const diff=Math.ceil((new Date(target)-new Date())/(1000*60*60*24));
+  $('cd-value').innerHTML=`${Math.max(0,diff)} <span>days</span>`;
+  // 進捗リング (3/11→9/21 = ~194日をフルスパンと仮定)
+  const totalDays=194;
+  const elapsed=totalDays-diff;
+  const pct=Math.min(100,Math.max(0,Math.round(elapsed/totalDays*100)));
+  const circ=150.8;
+  $('cd-ring').setAttribute('stroke-dashoffset', circ-(circ*pct/100));
+  $('cd-pct').textContent=pct+'%';
+  // オンボーディング
+  const obCD=$('ob-countdown');
+  const months=Math.floor(diff/30);const days=diff%30;
+  obCD.innerHTML=`
+    <div class="ob-countdown-item"><div class="ob-countdown-num">${months}</div><div class="ob-countdown-label">months</div></div>
+    <div class="ob-countdown-item"><div class="ob-countdown-num">${days}</div><div class="ob-countdown-label">days</div></div>
+  `;
+}
+function saveTargetDate(){localStorage.setItem('fi-target',$('target-date').value);updateCountdown();toast('留学開始日を更新しました','📅');}
+
+// ===== プロンプト =====
+function showPrompt(){
+  $('prompt-card').style.display='';
+  if(freeMode){
+    // フリーライティングモード: カードは残すがお題テキストを変える
+    $('prompt-text').textContent='自由に書こう — テーマなし、頭に浮かんだことを英語でそのまま。';
+    $('prompt-card').setAttribute('data-cat','daily');
+    $('prompt-badge').className='prompt-category';
+    $('prompt-badge').textContent='✏️ Free Write';
+    $('prompt-badge').style.cssText='background:var(--bg-tertiary);color:var(--text-secondary)';
+    document.querySelectorAll('.prompt-tab').forEach(t=>{t.classList.toggle('active',t.dataset.cat==='free');});
+    return;
+  }
+  $('prompt-badge').style.cssText='';
+  const seed=new Date().getFullYear()*10000+(new Date().getMonth()+1)*100+new Date().getDate()+promptIdx;
+  const ps=PROMPTS[curCat];
+  const text=ps[seed%ps.length];
+  $('prompt-text').textContent=`"${text}"`;
+  $('prompt-card').setAttribute('data-cat',curCat);
+  const catMap={daily:['🌅 Daily','cat-daily'],academic:['📚 Academic','cat-academic'],uk:['🇬🇧 UK Life','cat-uk']};
+  const[label,cls]=catMap[curCat];
+  $('prompt-badge').className=`prompt-category ${cls}`;
+  $('prompt-badge').textContent=label;
+  document.querySelectorAll('.prompt-tab').forEach(t=>{t.classList.toggle('active',t.dataset.cat===curCat);});
+}
+function setCat(c){if(c==='free'){freeMode=true;}else{freeMode=false;curCat=c;promptIdx=0;}showPrompt();}
+function shufflePrompt(){promptIdx++;showPrompt();}
+
+// ===== Tip of the Day =====
+function showTip(){
+  const seed=new Date().getDate()+new Date().getMonth()*31;
+  const tip=TIPS[seed%TIPS.length];
+  $('tip-text').innerHTML=tip.text;
+}
+
+// ===== タイマー =====
+function updateTimerUI(){
+  const m=Math.floor(timerSec/60),s=timerSec%60;
+  const chip=$('timer-chip');
+  chip.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  chip.classList.remove('warning','danger');
+  if(timerSec<=60)chip.classList.add('danger');
+  else if(timerSec<=180)chip.classList.add('warning');
+}
+function toggleTimer(){
+  if(timerOn){clearInterval(timerInt);timerOn=false;$('timer-btn').textContent='▶️';}
+  else{
+    if(timerSec<=0){resetTimer();}// 0の場合はリセットしてから開始
+    timerOn=true;$('timer-btn').textContent='⏸️';
+    timerInt=setInterval(()=>{
+      timerSec=Math.max(0,timerSec-1);
+      updateTimerUI();
+      if(timerSec<=0){clearInterval(timerInt);timerOn=false;$('timer-btn').textContent='▶️';toast('タイマー終了！でも書き続けてOKです 🎉','⏰');}
+    },1000);
+  }
+}
+function resetTimer(){clearInterval(timerInt);timerOn=false;timerSec=timerMin*60;$('timer-btn').textContent='▶️';updateTimerUI();}
+function setTimerMinutes(){timerMin=parseInt($('timer-select').value);localStorage.setItem('fi-timer',timerMin);resetTimer();}
+
+// ===== ワードカウント（デバウンス付き）=====
+let wcTimer=null;
+$('journal-input').addEventListener('input',function(){
+  const inp=this;
+  if(wcTimer)clearTimeout(wcTimer);
+  wcTimer=setTimeout(()=>{$('word-badge').textContent=countWords(inp.value)+' words';},150);
+});
+
+// ===== 音声入力 =====
+let micPermGranted=false;
+let speechLang='en-US';
+
+function initSpeech(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  // ボタンは常に表示（対応ブラウザなら）
+  if(SR){
+    $('mic-btn').style.display='';
+    $('lang-btn').style.display='';
+    $('mic-divider').style.display='';
+  }
+}
+
+// SpeechRecognition を作成して設定する
+function createRecognition(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return null;
+  const r=new SR();
+  r.lang=speechLang;
+  r.interimResults=true;
+  r.continuous=true;
+  r.maxAlternatives=1;
+  r.onresult=e=>{
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      if(e.results[i].isFinal){
+        const inp=$('journal-input');
+        const transcript=e.results[i][0].transcript;
+        const start=inp.selectionStart||inp.value.length;
+        const end=inp.selectionEnd||inp.value.length;
+        const before=inp.value.substring(0,start);
+        const after=inp.value.substring(end);
+        inp.value=before+transcript+' '+after;
+        inp.selectionStart=inp.selectionEnd=start+transcript.length+1;
+        inp.dispatchEvent(new Event('input'));
+      }
+    }
+  };
+  r.onend=()=>{
+    if(recording){
+      try{r.start();}catch(e){}
+    }
+  };
+  r.onerror=e=>{
+    console.log('SpeechRecognition error:',e.error);
+    if(e.error==='not-allowed'){
+      recording=false;$('mic-btn').classList.remove('recording');
+      micPermGranted=false;
+      toast('マイクがブロックされています。アドレスバー左の🔒マーク → マイク → 許可 に変更してください','⚠️');
+    }else if(e.error==='network'){
+      recording=false;$('mic-btn').classList.remove('recording');
+      toast('音声認識サーバーに接続できません。インターネット接続を確認してください','⚠️');
+    }else if(e.error==='service-not-allowed'){
+      recording=false;$('mic-btn').classList.remove('recording');
+      toast('この環境では音声認識が利用できません。Chrome ブラウザで試してください','⚠️');
+    }else if(e.error!=='no-speech'&&e.error!=='aborted'){
+      recording=false;$('mic-btn').classList.remove('recording');
+      console.log('Speech error:',e.error);
+    }
+  };
+  return r;
+}
+
+// マイクボタンのメイン処理
+async function toggleMic(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    toast('このブラウザは音声入力に対応していません。Chrome をお使いください','⚠️');
+    return;
+  }
+
+  // 録音中なら停止
+  if(recording){
+    recording=false;
+    if(recognition){try{recognition.stop();}catch(e){}}
+    $('mic-btn').classList.remove('recording');
+    toast('音声入力を停止','🎤');
+    return;
+  }
+
+  // ステップ1: まずマイクの許可を getUserMedia で取得（これでポップアップが出る）
+  if(!micPermGranted){
+    toast('マイクの許可を確認中...','🎤');
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+      // 許可を得たらストリームを閉じる（SpeechRecognitionが別途マイクを使う）
+      stream.getTracks().forEach(t=>t.stop());
+      micPermGranted=true;
+    }catch(err){
+      console.log('getUserMedia error:',err.name,err.message);
+      if(err.name==='NotAllowedError'||err.name==='PermissionDeniedError'){
+        toast('マイクの使用が拒否されました。ブラウザのアドレスバー左の🔒→マイク→許可 に変更してください','⚠️');
+      }else if(err.name==='NotFoundError'){
+        toast('マイクが見つかりません。マイクが接続されているか確認してください','⚠️');
+      }else if(err.name==='NotSupportedError'||err.name==='TypeError'){
+        // file:// や非セキュアな環境
+        modal('音声入力のセットアップ','',
+          [{label:'閉じる',fn:()=>{}}]
+        );
+        $('m-title').textContent='音声入力のセットアップ';
+        $('m-body').innerHTML=`
+          <div style="text-align:left;font-size:0.85rem;line-height:1.7;color:var(--text-secondary)">
+            <p style="margin-bottom:12px">現在の環境ではマイクを使えません。<br>以下のいずれかの方法で解決できます：</p>
+            <p style="margin-bottom:6px"><strong>方法1: ローカルサーバー（簡単）</strong></p>
+            <code style="display:block;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;margin-bottom:6px;font-family:var(--font-mono);font-size:0.82rem">npx serve .</code>
+            <p style="margin-bottom:16px;font-size:0.8rem;color:var(--text-tertiary)">index.htmlがあるフォルダでターミナルから実行 → localhost:3000 を開く</p>
+            <p style="margin-bottom:6px"><strong>方法2: Python（Nodeなしで可）</strong></p>
+            <code style="display:block;padding:8px 12px;background:var(--bg-tertiary);border-radius:8px;margin-bottom:6px;font-family:var(--font-mono);font-size:0.82rem">python3 -m http.server 8000</code>
+            <p style="margin-bottom:16px;font-size:0.8rem;color:var(--text-tertiary)">→ localhost:8000 を開く</p>
+            <p><strong>方法3: GitHub Pages にデプロイ（推奨）</strong></p>
+            <p style="font-size:0.8rem;color:var(--text-tertiary)">HTTPS でスマホからも使えるようになります</p>
+          </div>`;
+      }else{
+        toast('マイクへのアクセスでエラーが発生しました: '+err.message,'⚠️');
+      }
+      return;
+    }
+  }
+
+  // ステップ2: SpeechRecognition を開始
+  recognition=createRecognition();
+  if(!recognition){toast('音声認識の初期化に失敗しました','⚠️');return;}
+  recording=true;
+  recognition.lang=speechLang;
+  try{
+    recognition.start();
+  }catch(e){
+    recording=false;
+    toast('音声認識の開始に失敗しました: '+e.message,'⚠️');
+    return;
+  }
+  $('mic-btn').classList.add('recording');
+  const langLabel=speechLang==='en-US'?'English':'日英ミックス';
+  toast(`${langLabel} で話してください...`,'🎤');
+}
+
+// 言語切り替え（英語 ↔ 日英ミックス）
+function toggleSpeechLang(){
+  if(speechLang==='en-US'){
+    speechLang='ja-JP';
+    $('lang-btn').textContent='日英';
+    $('lang-btn').style.color='var(--accent)';
+    toast('日英ミックスモード — わからない単語は日本語でOK','🌐');
+  }else{
+    speechLang='en-US';
+    $('lang-btn').textContent='EN';
+    $('lang-btn').style.color='';
+    toast('英語モード','🇺🇸');
+  }
+  // 録音中なら一度止めて再開（新しい言語で）
+  if(recording&&recognition){
+    recording=false;
+    try{recognition.stop();}catch(e){}
+    $('mic-btn').classList.remove('recording');
+    setTimeout(()=>toggleMic(),300);
+  }
+}
+
+// ===== エントリー保存 =====
+async function saveEntry(){
+  const content=$('journal-input').value.trim();
+  if(!content){toast('テキストを入力してください','⚠️');return;}
+  const saveBtn=document.querySelector('.btn-primary[onclick="saveEntry()"]');
+  if(saveBtn){saveBtn.disabled=true;saveBtn.textContent='⏳ 保存中...';}
+  try{
+    const elapsed=Math.max(0, timerMin*60-timerSec);
+    const entry={
+      date:dateKey(),content,wordCount:countWords(content),
+      duration:elapsed,
+      prompt:freeMode?null:$('prompt-text').textContent,
+      category:freeMode?'free':curCat,
+      correction:'',
+      createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()
+    };
+    const existing=entries.find(e=>e.date===dateKey());
+    if(existing){entry.id=existing.id;entry.createdAt=existing.createdAt;entry.correction=existing.correction||'';}
+    const savedId=await dbPut('entries',entry);
+    if(!entry.id) entry.id=savedId;
+    // テキストエリアをクリア
+    $('journal-input').value='';
+    $('word-badge').textContent='0 words';
+    resetTimer();
+
+    const apiKey=localStorage.getItem('fi-api-key');
+    if(apiKey){
+      // === APIキーあり: Claude API自動添削 ===
+      if(saveBtn) saveBtn.textContent='🤖 AI添削中...';
+      await autoCorrect(entry);
+      await loadAll();
+      $('journal-input').value='';$('word-badge').textContent='0 words';
+      goPage('history',true);
+      openDetail(entry.id);
+    }else{
+      // === APIキーなし: 自動コピー → claude.ai を開く ===
+      await loadAll();
+      $('journal-input').value='';$('word-badge').textContent='0 words';
+      // クリップボードにプロンプト+本文をコピー
+      const promptText=CORRECTION_PROMPT+'\n\n---\n\n'+content;
+      try{
+        await navigator.clipboard.writeText(promptText);
+        toast('添削プロンプトをコピーしました！Claude.aiに貼り付けてください','📋',5000);
+      }catch(clipErr){
+        // clipboard APIが使えない場合（file://など）→ 手動コピー用のモーダル
+        showCopyModal(promptText);
+      }
+      // claude.aiを新しいタブで開く
+      window.open('https://claude.ai/new','_blank');
+      // History画面に遷移
+      goPage('history',true);
+      openDetail(entry.id);
+    }
+
+    // マイルストーンチェック
+    const streak=calcStreak();
+    if(streak>0&&streak%7===0)fireConfetti();
+    if(entries.length===1){fireConfetti();toast('最初のエントリー！🎉','🎉');}
+  }finally{
+    if(saveBtn){saveBtn.disabled=false;saveBtn.textContent='💾 Save Entry';}
+  }
+}
+
+// クリップボードAPI使えないとき用のコピーモーダル
+function showCopyModal(text){
+  const overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML=`
+    <div style="background:var(--bg-card-solid);border-radius:var(--radius-lg);padding:20px;max-width:500px;width:100%;max-height:60vh;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow-xl)">
+      <div style="font-weight:700;font-size:1rem">📋 以下をコピーしてClaude.aiに貼り付けてください</div>
+      <textarea id="copy-modal-text" readonly style="flex:1;min-height:150px;padding:12px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-tertiary);color:var(--text-primary);font-size:0.8rem;font-family:var(--font-mono);resize:none">${text.replace(/</g,'&lt;')}</textarea>
+      <div style="display:flex;gap:8px;justify-content:flex-end">
+        <button onclick="document.getElementById('copy-modal-text').select();document.execCommand('copy');this.textContent='コピーしました！'" style="padding:8px 16px;border-radius:var(--radius-sm);background:var(--gradient-accent);color:white;font-weight:600;font-size:0.85rem">コピー</button>
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="padding:8px 16px;border-radius:var(--radius-sm);background:var(--bg-tertiary);font-weight:600;font-size:0.85rem">閉じる</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+// ===== ビルトイン文法チェッカー（オフライン対応） =====
+const GRAMMAR_RULES=[
+  // === 主語-動詞の一致 ===
+  {p:/\bI\s+(has|was been|is|does|goes|makes|takes|comes|gives|thinks|knows|wants|needs|gets|says|uses|finds|tells|works|plays|runs|sees|seems)\b/gi,
+   r:(m,v)=>{const map={has:'have',is:'am',does:'do',goes:'go',makes:'make',takes:'take',comes:'come',gives:'give',thinks:'think',knows:'know',wants:'want',needs:'need',gets:'get',says:'say',uses:'use',finds:'find',tells:'tell',works:'work',plays:'play',runs:'run',sees:'see',seems:'seem'};return 'I '+(map[v.toLowerCase()]||v);},
+   n:'Subject-verb agreement: "I" takes base form',c:'Grammar'},
+  {p:/\b(He|She|It)\s+(have|are|do|go|make|take|come|give|think|know|want|need|get|say|use|find|tell|work|play|run|see|seem)\b/g,
+   r:(m,s,v)=>{const map={have:'has',are:'is',do:'does',go:'goes',make:'makes',take:'takes',come:'comes',give:'gives',think:'thinks',know:'knows',want:'wants',need:'needs',get:'gets',say:'says',use:'uses',find:'finds',tell:'tells',work:'works',play:'plays',run:'runs',see:'sees',seem:'seems'};return s+' '+(map[v.toLowerCase()]||v);},
+   n:'Subject-verb agreement: third person singular needs -s/-es',c:'Grammar'},
+  // === 冠詞 ===
+  {p:/\ba\s+([aeiouAEIOU]\w+)/g,r:(m,w)=>'an '+w,n:'Use "an" before vowel sounds',c:'Grammar'},
+  {p:/\ban\s+([bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ]\w+)/g,
+   r:(m,w)=>{const exceptions=['hour','honest','honor','heir','herb'];if(exceptions.some(e=>w.toLowerCase().startsWith(e)))return m;return 'a '+w;},
+   n:'Use "a" before consonant sounds',c:'Grammar'},
+  // === よくある間違い ===
+  {p:/\b(I|you|we|they)\s+is\b/gi,r:(m,s)=>s+' are',n:'Use "are" with plural/I/you subjects',c:'Grammar'},
+  {p:/\b(he|she|it)\s+are\b/gi,r:(m,s)=>s+' is',n:'Use "is" with third person singular',c:'Grammar'},
+  {p:/\bthere\s+is\s+many\b/gi,r:'there are many',n:'"there are" for plural nouns',c:'Grammar'},
+  {p:/\bthere\s+is\s+(\w+\s+)?(\w+s)\b/gi,r:(m,adj,noun)=>{if(noun.endsWith('ss')||noun.endsWith('us')||noun.endsWith('is'))return m;return 'there are '+(adj||'')+noun;},n:'"there are" for plural nouns',c:'Grammar'},
+  {p:/\bmore\s+(\w+er)\b/g,r:(m,w)=>w,n:'Don\'t use "more" with comparative adjectives (-er)',c:'Grammar'},
+  {p:/\bmost\s+(\w+est)\b/g,r:(m,w)=>w,n:'Don\'t use "most" with superlative adjectives (-est)',c:'Grammar'},
+  // === 時制 ===
+  {p:/\byesterday\s+I\s+(go|eat|see|come|make|take|give|think|get|run|write|speak|know|find|tell|buy|bring|begin|choose|draw|drink|drive|fall|feel|fly|forget|grow|hide|keep|leave|lose|meet|pay|read|ride|ring|rise|sell|send|set|show|sing|sit|sleep|spend|stand|swim|teach|throw|understand|wake|wear|win)\b/gi,
+   r:(m,v)=>{const past={go:'went',eat:'ate',see:'saw',come:'came',make:'made',take:'took',give:'gave',think:'thought',get:'got',run:'ran',write:'wrote',speak:'spoke',know:'knew',find:'found',tell:'told',buy:'bought',bring:'brought',begin:'began',choose:'chose',draw:'drew',drink:'drank',drive:'drove',fall:'fell',feel:'felt',fly:'flew',forget:'forgot',grow:'grew',hide:'hid',keep:'kept',leave:'left',lose:'lost',meet:'met',pay:'paid',read:'read',ride:'rode',ring:'rang',rise:'rose',sell:'sold',send:'sent',set:'set',show:'showed',sing:'sang',sit:'sat',sleep:'slept',spend:'spent',stand:'stood',swim:'swam',teach:'taught',throw:'threw',understand:'understood',wake:'woke',wear:'wore',win:'won'};return 'yesterday I '+(past[v.toLowerCase()]||v+'ed');},
+   n:'Use past tense with "yesterday"',c:'Tense'},
+  {p:/\blast\s+(week|month|year|night|time|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+I\s+(go|eat|see|come|make|take|give|think|get|run|write|speak|buy|bring|find|tell)\b/gi,
+   r:(m,t,v)=>{const past={go:'went',eat:'ate',see:'saw',come:'came',make:'made',take:'took',give:'gave',think:'thought',get:'got',run:'ran',write:'wrote',speak:'spoke',buy:'bought',bring:'brought',find:'found',tell:'told'};return 'last '+t+' I '+(past[v.toLowerCase()]||v+'ed');},
+   n:'Use past tense with "last ..."',c:'Tense'},
+  // === 前置詞 ===
+  {p:/\binterested for\b/gi,r:'interested in',n:'Use "interested in"',c:'Preposition'},
+  {p:/\bgood in\b/gi,r:'good at',n:'Use "good at"',c:'Preposition'},
+  {p:/\bdepend of\b/gi,r:'depend on',n:'Use "depend on"',c:'Preposition'},
+  {p:/\bmarried with\b/gi,r:'married to',n:'Use "married to"',c:'Preposition'},
+  {p:/\bdifferent of\b/gi,r:'different from',n:'Use "different from"',c:'Preposition'},
+  {p:/\bconsist in\b/gi,r:'consist of',n:'Use "consist of"',c:'Preposition'},
+  {p:/\blisten\s+(?!to\b)(\w)/gi,r:(m,w)=>'listen to '+w,n:'Use "listen to"',c:'Preposition'},
+  {p:/\barrive to\b/gi,r:'arrive at',n:'Use "arrive at" (place) / "arrive in" (city/country)',c:'Preposition'},
+  // === スペル・単語混同 ===
+  {p:/\btheir\s+(is|are|was|were)\b/gi,r:(m,v)=>'there '+v,n:'"there" (not "their") before is/are',c:'Spelling'},
+  {p:/\byour\s+(is|are|was|were|very|so|quite|really|always|never)\b/gi,r:(m,v)=>"you're "+v,n:'"you\'re" (= you are)',c:'Spelling'},
+  {p:/\bits\s+(a|an|the|is|was|very|so|not|been|also|often|always|never)\b/gi,r:(m,v)=>"it's "+v,n:'"it\'s" (= it is / it has)',c:'Spelling'},
+  {p:/\bshould\s+of\b/gi,r:'should have',n:'"should have" not "should of"',c:'Grammar'},
+  {p:/\bcould\s+of\b/gi,r:'could have',n:'"could have" not "could of"',c:'Grammar'},
+  {p:/\bwould\s+of\b/gi,r:'would have',n:'"would have" not "would of"',c:'Grammar'},
+  {p:/\bmight\s+of\b/gi,r:'might have',n:'"might have" not "might of"',c:'Grammar'},
+  {p:/\balot\b/g,r:'a lot',n:'"a lot" is two words',c:'Spelling'},
+  {p:/\binfomation\b/gi,r:'information',n:'Spelling: information',c:'Spelling'},
+  {p:/\brecieve\b/gi,r:'receive',n:'Spelling: receive (i before e except after c)',c:'Spelling'},
+  {p:/\boccured\b/gi,r:'occurred',n:'Spelling: occurred (double r)',c:'Spelling'},
+  {p:/\bseperate\b/gi,r:'separate',n:'Spelling: separate',c:'Spelling'},
+  {p:/\bdefinately\b/gi,r:'definitely',n:'Spelling: definitely',c:'Spelling'},
+  {p:/\baccommodate\b/gi,r:(m)=>m,n:'',c:''},// placeholder to skip
+  {p:/\buntill\b/gi,r:'until',n:'Spelling: until (one l)',c:'Spelling'},
+  {p:/\bwich\b/gi,r:'which',n:'Spelling: which',c:'Spelling'},
+  {p:/\bbecouse\b/gi,r:'because',n:'Spelling: because',c:'Spelling'},
+  {p:/\bbeacuse\b/gi,r:'because',n:'Spelling: because',c:'Spelling'},
+  {p:/\bteh\b/g,r:'the',n:'Typo: the',c:'Typo'},
+  {p:/\badn\b/g,r:'and',n:'Typo: and',c:'Typo'},
+  {p:/\bwaht\b/g,r:'what',n:'Typo: what',c:'Typo'},
+  {p:/\bwiht\b/g,r:'with',n:'Typo: with',c:'Typo'},
+  {p:/\bthat\s+that\b/gi,r:'that',n:'Repeated word: "that that"',c:'Style'},
+  {p:/\bthe\s+the\b/gi,r:'the',n:'Repeated word: "the the"',c:'Typo'},
+  // === 句読点 ===
+  {p:/\bi\b(?!')/g,r:'I',n:'Capitalize "I"',c:'Capitalization'},
+  {p:/\s+,/g,r:',',n:'No space before comma',c:'Punctuation'},
+  {p:/\s+\./g,r:'.',n:'No space before period',c:'Punctuation'},
+  {p:/,(?=[A-Za-z])/g,r:', ',n:'Add space after comma',c:'Punctuation'},
+  // === 日本語英語の典型的ミス ===
+  {p:/\bI\s+went\s+to\s+shopping\b/gi,r:'I went shopping',n:'"go shopping" (no "to")',c:'Grammar'},
+  {p:/\bI\s+go\s+to\s+shopping\b/gi,r:'I go shopping',n:'"go shopping" (no "to")',c:'Grammar'},
+  {p:/\bI\s+enjoy\s+to\s+(\w+)\b/gi,r:(m,v)=>'I enjoy '+v+'ing',n:'"enjoy + -ing" (not "to")',c:'Grammar'},
+  {p:/\bI\s+want\s+go\b/gi,r:'I want to go',n:'"want to + verb"',c:'Grammar'},
+  {p:/\bI\s+can\s+to\s+/gi,r:'I can ',n:'"can + base verb" (no "to")',c:'Grammar'},
+  {p:/\bI\s+must\s+to\s+/gi,r:'I must ',n:'"must + base verb" (no "to")',c:'Grammar'},
+  {p:/\balmost\s+of\b/gi,r:'most of',n:'"most of" not "almost of"',c:'Grammar'},
+  {p:/\bin\s+this\s+days\b/gi,r:'these days',n:'"these days" not "in this days"',c:'Grammar'},
+  {p:/\bso\s+many\s+fun\b/gi,r:'so much fun',n:'"fun" is uncountable: "so much fun"',c:'Grammar'},
+  {p:/\bvery\s+enjoy\b/gi,r:'really enjoy',n:'Use "really enjoy" not "very enjoy"',c:'Grammar'},
+  {p:/\bI\s+very\s+like\b/gi,r:'I really like',n:'Use "really like" not "very like"',c:'Grammar'},
+  {p:/\bfunny\s+(time|day|experience|trip|memory)\b/gi,r:(m,n)=>'fun '+n,n:'"fun" (enjoyable) vs "funny" (humorous)',c:'Word Choice'},
+];
+
+function builtinGrammarCheck(text){
+  const matches=[];
+  for(const rule of GRAMMAR_RULES){
+    if(!rule.n)continue; // skip placeholders
+    let match;
+    const regex=new RegExp(rule.p.source, rule.p.flags);
+    while((match=regex.exec(text))!==null){
+      const original=match[0];
+      let replacement;
+      if(typeof rule.r==='function'){
+        replacement=rule.r(...match);
+      }else{
+        replacement=original.replace(new RegExp(rule.p.source,rule.p.flags.replace('g','')),rule.r);
+      }
+      if(replacement && replacement!==original){
+        matches.push({
+          offset:match.index,
+          length:original.length,
+          original,
+          replacement,
+          message:rule.n,
+          category:rule.c
+        });
+      }
+    }
+  }
+  // 重複除去（同じ位置の修正は1つだけ）
+  const unique=[];
+  const seen=new Set();
+  for(const m of matches){
+    const key=m.offset+':'+m.length;
+    if(!seen.has(key)){seen.add(key);unique.push(m);}
+  }
+  return unique.sort((a,b)=>a.offset-b.offset);
+}
+
+// ===== Claude API Key管理 =====
+function saveApiKey(){
+  const key=$('api-key-input').value.trim();
+  if(!key){localStorage.removeItem('fi-api-key');$('api-key-status').textContent='APIキーを削除しました';$('api-key-status').style.color='var(--text-tertiary)';toast('APIキーを削除しました','🗑️');return;}
+  if(!key.startsWith('sk-ant-')){toast('無効なAPIキーです。sk-ant-で始まるキーを入力してください','⚠️');return;}
+  localStorage.setItem('fi-api-key',key);
+  $('api-key-status').textContent='✅ APIキー保存済み — Claude AI添削が有効です';
+  $('api-key-status').style.color='var(--success)';
+  toast('APIキーを保存しました！AI添削が有効になりました','✅');
+}
+function loadApiKey(){
+  const key=localStorage.getItem('fi-api-key')||'';
+  if(key){$('api-key-input').value=key;$('api-key-status').textContent='✅ APIキー保存済み — Claude AI添削が有効です';$('api-key-status').style.color='var(--success)';}
+}
+function saveAiModel(){localStorage.setItem('fi-ai-model',$('ai-model-select').value);}
+function getAiModel(){return localStorage.getItem('fi-ai-model')||'claude-haiku-4-5-20251001';}
+
+// ===== Claude API添削 =====
+const CORRECTION_SYSTEM_PROMPT=`You are an expert English writing tutor for a Japanese learner preparing for UK graduate school.
+
+Correct the journal entry and return ONLY valid JSON (no markdown, no code fences).
+
+Rules:
+1. Translate ALL Japanese text (漢字, ひらがな, カタカナ) into natural English
+2. Fix all grammar errors
+3. Improve unnatural expressions to sound like a native speaker, even if grammatically correct
+4. Keep the tone casual and personal (it's a diary)
+5. Preserve the original meaning and personality
+
+Format:
+{"corrections":[{"before":"original phrase","after":"corrected phrase"}],"enhanced":"full corrected text"}
+
+Important:
+- Each correction = one specific phrase change, NOT the whole sentence
+- Do NOT include explanations or notes — just before and after
+- "enhanced" = the complete corrected version of the full text
+- If no issues: {"corrections":[],"enhanced":"(same text)"}`;
+
+async function claudeCorrect(text){
+  const apiKey=localStorage.getItem('fi-api-key');
+  if(!apiKey) return null; // APIキーなし → fallback
+
+  const model=getAiModel();
+  const controller=new AbortController();
+  const timeout=setTimeout(()=>controller.abort(),30000);
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model,
+        max_tokens:2048,
+        system:CORRECTION_SYSTEM_PROMPT,
+        messages:[{role:'user',content:text}]
+      }),
+      signal:controller.signal
+    });
+    clearTimeout(timeout);
+
+    if(!res.ok){
+      const errBody=await res.text().catch(()=>'');
+      if(res.status===401){toast('APIキーが無効です。Settingsで確認してください','⚠️',5000);return null;}
+      if(res.status===429){toast('API制限中です。少し待ってから再試行してください','⚠️',4000);return null;}
+      throw new Error(`API ${res.status}: ${errBody.substring(0,100)}`);
+    }
+
+    const data=await res.json();
+    const content=data.content&&data.content[0]&&data.content[0].text;
+    if(!content) throw new Error('Empty API response');
+
+    // JSONをパース（コードフェンスがついてる場合も処理）
+    let jsonStr=content.trim();
+    if(jsonStr.startsWith('```')) jsonStr=jsonStr.replace(/^```(?:json)?\n?/,'').replace(/\n?```$/,'');
+    const result=JSON.parse(jsonStr);
+
+    return result;
+  }catch(err){
+    clearTimeout(timeout);
+    if(err.name==='AbortError'){toast('AI添削がタイムアウトしました','⚠️',4000);return null;}
+    if(err instanceof SyntaxError){console.error('JSON parse error:',err);toast('AI応答のパースに失敗しました。再試行してください','⚠️',4000);return null;}
+    console.error('Claude API error:',err);
+    toast(`AI添削エラー: ${err.message}`,'⚠️',4000);
+    return null;
+  }
+}
+
+// ===== 自動添削 (Claude API → LanguageTool → ビルトインフォールバック) =====
+const LT_ENDPOINTS=[
+  'https://api.languagetool.org/v2/check',
+  'https://api.languagetoolplus.com/v2/check'
+];
+
+async function callLanguageTool(text){
+  const params=new URLSearchParams({text,language:'en-US',enabledOnly:'false'});
+  let lastErr=null;
+  for(const url of LT_ENDPOINTS){
+    try{
+      const controller=new AbortController();
+      const timeout=setTimeout(()=>controller.abort(),12000);
+      const res=await fetch(url,{
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:params,
+        signal:controller.signal
+      });
+      clearTimeout(timeout);
+      if(!res.ok){lastErr=new Error(`HTTP ${res.status}`);continue;}
+      return await res.json();
+    }catch(e){
+      lastErr=e;
+      console.warn('LanguageTool failed:',url,e.message);
+    }
+  }
+  throw lastErr||new Error('All endpoints failed');
+}
+
+function applyCorrections(entry, corrections, source){
+  let correctionText='';
+  const sorted=[...corrections].sort((a,b)=>b.offset-a.offset);
+  let enhancedText=entry.content;
+
+  const correctionItems=[];
+  for(const m of corrections){
+    if(m.replacement && m.original!==m.replacement){
+      correctionItems.push({
+        before:m.original,
+        after:m.replacement,
+        note:m.message||'',
+        rule:m.rule||'',
+        category:m.category||''
+      });
+      correctionText+=`❌ ${m.original} → ✅ ${m.replacement}\n`;
+    }
+  }
+
+  // Enhanced テキストを生成（後ろから置換）
+  for(const m of sorted){
+    if(m.replacement && m.original!==m.replacement){
+      enhancedText=enhancedText.substring(0,m.offset)+m.replacement+enhancedText.substring(m.offset+m.length);
+    }
+  }
+
+  entry.correction=correctionText.trim();
+  entry.autoCorrections=correctionItems;
+  entry.enhancedText=enhancedText;
+  entry.correctionSource=source;
+  entry.updatedAt=new Date().toISOString();
+  return correctionItems;
+}
+
+async function autoCorrect(entry){
+  // ===== 1. Claude API（最高品質：日本語翻訳＋自然な英語化）=====
+  const apiKey=localStorage.getItem('fi-api-key');
+  if(apiKey){
+    const result=await claudeCorrect(entry.content);
+    if(result){
+      // Claude結果を適用
+      let correctionText='';
+      const correctionItems=(result.corrections||[]).map(c=>{
+        correctionText+=`❌ ${c.before} → ✅ ${c.after}\n`;
+        return{before:c.before,after:c.after,note:c.note||'',rule:'',category:'AI'};
+      });
+      entry.correction=correctionText.trim();
+      entry.autoCorrections=correctionItems;
+      entry.enhancedText=result.enhanced||entry.content;
+      entry.correctionSource='claude';
+      entry.updatedAt=new Date().toISOString();
+      await dbPut('entries',entry);
+      const idx=entries.findIndex(e=>e.id===entry.id);
+      if(idx!==-1) entries[idx]=entry;
+      if(correctionItems.length===0){
+        toast('AI添削完了 — 問題なし！ 🎉','✅');
+      }else{
+        toast(`AI添削完了！${correctionItems.length}件の修正 🤖`,'✅');
+        await extractKnowledge(entry);
+      }
+      if(detailId===entry.id){$('correction-input').value=entry.correction;renderDiffView(entry);}
+      return;
+    }
+    // claudeCorrectがnullを返した（エラー） → フォールバックへ
+    console.warn('Claude API failed, falling back...');
+  }
+
+  // ===== 2. LanguageTool API =====
+  try{
+    const data=await callLanguageTool(entry.content);
+    const matches=(data.matches||[]).map(m=>({
+      offset:m.offset,length:m.length,
+      original:entry.content.substring(m.offset,m.offset+m.length),
+      replacement:m.replacements&&m.replacements.length>0?m.replacements[0].value:null,
+      message:m.message||'',rule:m.rule?m.rule.id:'',
+      category:m.rule&&m.rule.category?m.rule.category.name:''
+    })).filter(m=>m.replacement&&m.original!==m.replacement);
+
+    if(matches.length>0){
+      const items=applyCorrections(entry,matches,'languagetool');
+      await dbPut('entries',entry);
+      const idx=entries.findIndex(e=>e.id===entry.id);
+      if(idx!==-1) entries[idx]=entry;
+      toast(`添削完了！${items.length}件の修正を検出 📝`,'✅');
+      await extractKnowledge(entry);
+      if(detailId===entry.id){$('correction-input').value=entry.correction;renderDiffView(entry);}
+      return;
+    }
+    // LT修正なし → ビルトインも試す
+  }catch(err){
+    console.warn('LanguageTool unavailable:',err.message);
+  }
+
+  // ===== 3. ビルトイン文法チェッカー =====
+  try{
+    const builtinMatches=builtinGrammarCheck(entry.content);
+    if(builtinMatches.length>0){
+      const items=applyCorrections(entry,builtinMatches,'builtin');
+      await dbPut('entries',entry);
+      const idx=entries.findIndex(e=>e.id===entry.id);
+      if(idx!==-1) entries[idx]=entry;
+      toast(`添削完了！${items.length}件の修正を検出 📝`,'✅');
+      await extractKnowledge(entry);
+      if(detailId===entry.id){$('correction-input').value=entry.correction;renderDiffView(entry);}
+      return;
+    }
+  }catch(e2){console.warn('Builtin checker error:',e2);}
+
+  // どの方法でも修正なし
+  entry.correction='No grammar issues found! Great job.';
+  entry.autoCorrections=[];entry.correctionSource=apiKey?'claude':'builtin';
+  entry.updatedAt=new Date().toISOString();
+  await dbPut('entries',entry);
+  const idx=entries.findIndex(e=>e.id===entry.id);
+  if(idx!==-1) entries[idx]=entry;
+  toast('添削完了 — 問題なし！ 🎉','✅');
+}
+
+// 既存エントリーを手動で自動添削する
+async function reRunAutoCorrect(){
+  if(!detailId)return;
+  const entry=entries.find(e=>e.id===detailId);
+  if(!entry)return;
+  toast('自動添削中...','🔄');
+  await autoCorrect(entry);
+}
+
+// ===== エントリー一覧 =====
+async function loadEntries(){entries=await dbAll('entries');entries.sort((a,b)=>b.date.localeCompare(a.date));renderEntries();}
+function renderEntries(){
+  if(entries.length===0){$('entry-list').innerHTML='';$('history-empty').style.display='';return;}
+  $('history-empty').style.display='none';
+  $('entry-list').innerHTML=entries.map(e=>`
+    <div class="entry-card" onclick="openDetail(${e.id})">
+      <div class="entry-date-row">
+        <span class="entry-date">${fmtDate(e.date)}${e.createdAt?' <span style="color:var(--text-tertiary);font-size:0.78rem;font-weight:400">'+fmtTime(e.createdAt)+'</span>':''}</span>
+        <span class="entry-cat-dot ${e.category||'free'}"></span>
+      </div>
+      <div class="entry-preview">${esc(e.content)}</div>
+      <div class="entry-meta-row">
+        <span>📝 ${e.wordCount} words</span>
+        <span>⏱️ ${Math.floor((e.duration||0)/60)}m</span>
+      </div>
+      ${e.correction?'<div class="entry-badge-row"><span class="badge-sm badge-corrected">添削済</span></div>':''}
+    </div>`).join('');
+}
+function openDetail(id){
+  detailId=id;const e=entries.find(x=>x.id===id);if(!e)return;
+  $('history-list-view').style.display='none';
+  $('entry-detail').classList.add('active');
+  $('detail-date').innerHTML=fmtDate(e.date)+(e.createdAt?' <span style="color:var(--text-tertiary);font-size:0.82rem;font-weight:400">'+fmtTime(e.createdAt)+'</span>':'');
+  $('detail-meta').innerHTML=`<span>📝 ${e.wordCount} words</span><span>⏱️ ${Math.floor((e.duration||0)/60)}m${(e.duration||0)%60}s</span>`;
+  $('detail-body').textContent=e.content;
+  $('correction-input').value=e.correction||'';
+  // 添削ガイドをAPI有無で動的変更
+  const guideEl=$('correction-guide-steps');
+  if(localStorage.getItem('fi-api-key')){
+    guideEl.innerHTML='<li>Saveすると自動でAI添削されます（Claude API）</li><li>🔄ボタンで再添削も可能</li><li>添削メモに手動で追記もできます</li>';
+  }else{
+    guideEl.innerHTML='<li>Saveすると添削プロンプトが自動コピーされ、Claude.aiが開きます</li><li>Claude.aiに貼り付け（Ctrl+V）→ 添削結果を取得</li><li>結果を下の「添削メモ」に貼り付けて「保存 & 解析」</li>';
+  }
+  // 添削済みなら自動でBefore/Afterタブ、なければOriginal
+  const hasAutoCorrections=(e.autoCorrections&&e.autoCorrections.length>0)||(e.correction&&e.correction.trim().length>0);
+  switchDiffTab(hasAutoCorrections?'diff':'original');
+  renderDiffView(e);
+}
+function closeDetail(){detailId=null;$('history-list-view').style.display='';$('entry-detail').classList.remove('active');}
+
+// ===== Diff タブ切替 =====
+function switchDiffTab(tab){
+  document.querySelectorAll('.diff-tab').forEach((t,i)=>{
+    const tabs=['original','diff','enhanced'];
+    t.classList.toggle('active', tabs[i]===tab);
+  });
+  document.querySelectorAll('.diff-panel').forEach(p=>p.classList.remove('active'));
+  $('panel-'+tab).classList.add('active');
+}
+
+// ===== 添削パース & Before/After 生成 =====
+function parseCorrectionText(correctionText){
+  const items=[];
+  // パターン1: ❌ ... → ✅ ... (括弧内の説明はオプション)
+  // 各行末またはnext ❌ まで
+  const regex1=/❌\s*(.+?)\s*→\s*✅\s*(.+?)(?:\s*\(([^)]+)\))?(?=\n|❌|$)/gm;
+  let match;
+  while((match=regex1.exec(correctionText))!==null){
+    items.push({before:match[1].trim(), after:match[2].trim(), note:match[3]?match[3].trim():''});
+  }
+  // パターン2: **原文** → **修正文** (Markdown bold)
+  if(items.length===0){
+    const regex2=/\*\*(.+?)\*\*\s*→\s*\*\*(.+?)\*\*(?:\s*[-–—(]\s*([^)\n]+))?/gm;
+    while((match=regex2.exec(correctionText))!==null){
+      items.push({before:match[1].trim(), after:match[2].trim(), note:match[3]?match[3].trim():''});
+    }
+  }
+  // パターン3: [original] → [corrected]
+  if(items.length===0){
+    const regex3=/\[([^\]]+)\]\s*→\s*\[([^\]]+)\](?:\s*[-–—]\s*([^\n]+))?/gm;
+    while((match=regex3.exec(correctionText))!==null){
+      items.push({before:match[1].trim(), after:match[2].trim(), note:match[3]?match[3].trim():''});
+    }
+  }
+  // パターン4: "original" → "corrected"
+  if(items.length===0){
+    const regex4=/"([^"]+)"\s*→\s*"([^"]+)"(?:\s*[-–—(]\s*([^)\n]+))?/gm;
+    while((match=regex4.exec(correctionText))!==null){
+      items.push({before:match[1].trim(), after:match[2].trim(), note:match[3]?match[3].trim():''});
+    }
+  }
+  return items;
+}
+
+function generateEnhancedText(original, corrections){
+  let enhanced = original;
+  corrections.forEach(c=>{
+    // 単語境界を考慮した置換（部分文字列の誤マッチを防ぐ）
+    // まず完全一致を試み、なければ大文字小文字無視で試す
+    let idx = enhanced.indexOf(c.before);
+    if(idx===-1) idx = enhanced.toLowerCase().indexOf(c.before.toLowerCase());
+    if(idx!==-1){
+      // 置換対象の前後がアルファベットでないことを確認（単語境界チェック）
+      const charBefore = idx>0 ? enhanced[idx-1] : ' ';
+      const charAfter = idx+c.before.length<enhanced.length ? enhanced[idx+c.before.length] : ' ';
+      const isWordBoundary = !/[a-zA-Z]/.test(charBefore) || !/[a-zA-Z]/.test(charAfter) || c.before.includes(' ');
+      if(isWordBoundary || c.before.length > 3){
+        enhanced = enhanced.substring(0,idx) + c.after + enhanced.substring(idx+c.before.length);
+      }
+    }
+  });
+  return enhanced;
+}
+
+function renderDiffView(entry){
+  const correction = entry.correction || '';
+  const hasCorrection = correction.trim().length > 0;
+  // autoCorrections を優先使用（LanguageTool結果）、なければテキストパース
+  const corrections = (entry.autoCorrections && entry.autoCorrections.length > 0)
+    ? entry.autoCorrections
+    : parseCorrectionText(correction);
+  const hasParsedItems = corrections.length > 0;
+  // enhancedText も保存済みがあれば使用
+  const enhancedText = entry.enhancedText || null;
+
+  // Before/After タブ
+  if(!hasCorrection && !hasParsedItems){
+    $('no-diff-msg').style.display='';
+    $('diff-items').style.display='none';
+    $('no-enhanced-msg').style.display='';
+    $('enhanced-text-area').style.display='none';
+    return;
+  }
+
+  if(hasParsedItems){
+    $('no-diff-msg').style.display='none';
+    $('diff-items').style.display='';
+    $('diff-items').innerHTML = `
+      <div class="correction-items">
+        ${corrections.map(c=>{
+          const diff=wordDiff(c.before, c.after);
+          // Before側: 変更された単語だけ赤
+          const bDiff=wordDiff(c.after, c.before); // 逆方向で元テキストの変更箇所を検出
+          const beforeHtml=bDiff.map(d=>d.changed?`<span style="color:var(--danger);font-weight:600">${esc(d.word)}</span>`:esc(d.word)).join(' ');
+          // After側: 変更された単語だけ緑
+          const afterHtml=diff.map(d=>d.changed?`<span style="color:#059669;font-weight:600">${esc(d.word)}</span>`:esc(d.word)).join(' ');
+          return `
+          <div class="correction-item">
+            <div>
+              <span class="correction-item-before">${beforeHtml}</span>
+              <span class="correction-item-arrow"> → </span>
+              <span class="correction-item-after">${afterHtml}</span>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>`;
+
+    // Enhanced テキスト（修正箇所を緑色でハイライト）
+    const enhanced = enhancedText || generateEnhancedText(entry.content, corrections);
+    $('no-enhanced-msg').style.display='none';
+    $('enhanced-text-area').style.display='';
+    $('enhanced-text').innerHTML = buildHighlightedEnhanced(enhanced, corrections);
+  } else if(hasCorrection) {
+    // パースできなかったがテキストはある → そのまま表示
+    $('no-diff-msg').style.display='none';
+    $('diff-items').style.display='';
+    $('diff-items').innerHTML = `<div class="diff-panel-content" style="font-size:0.9rem;white-space:pre-wrap;">${esc(correction)}</div>`;
+    $('no-enhanced-msg').style.display='none';
+    $('enhanced-text-area').style.display='';
+    const fallbackText = enhancedText || entry.content;
+    $('enhanced-text').innerHTML = buildHighlightedEnhanced(fallbackText, corrections);
+  }
+}
+
+// 修正箇所を緑色ハイライトしたHTMLを生成
+// 単語レベルで差分を検出し、変わった単語だけ緑にする
+function wordDiff(before, after){
+  const bWords=before.split(/(\s+)/); // スペースも保持
+  const aWords=after.split(/(\s+)/);
+  // 最長共通部分列で差分を取る（簡易版）
+  const result=[];
+  let bi=0,ai=0;
+  // 前から一致する部分をスキップ
+  const bClean=before.split(/\s+/).filter(Boolean);
+  const aClean=after.split(/\s+/).filter(Boolean);
+  const out=[];
+  let bIdx=0,aIdx=0;
+  while(bIdx<bClean.length && aIdx<aClean.length){
+    if(bClean[bIdx].toLowerCase()===aClean[aIdx].toLowerCase()){
+      out.push({word:aClean[aIdx],changed:false});
+      bIdx++;aIdx++;
+    }else{
+      // 先読み: afterの現在語がbeforeのどこかに後で出てくるか
+      let foundB=false;
+      for(let k=bIdx+1;k<Math.min(bIdx+5,bClean.length);k++){
+        if(bClean[k].toLowerCase()===aClean[aIdx].toLowerCase()){foundB=true;break;}
+      }
+      if(foundB){
+        // beforeをスキップ（削除された語）
+        bIdx++;
+      }else{
+        out.push({word:aClean[aIdx],changed:true});
+        // afterの語がbeforeに対応するか
+        let foundA=false;
+        for(let k=aIdx+1;k<Math.min(aIdx+5,aClean.length);k++){
+          if(bIdx<bClean.length && bClean[bIdx].toLowerCase()===aClean[k].toLowerCase()){foundA=true;break;}
+        }
+        if(!foundA && bIdx<bClean.length) bIdx++;
+        aIdx++;
+      }
+    }
+  }
+  // 残りのafter語は全部変更
+  while(aIdx<aClean.length){out.push({word:aClean[aIdx],changed:true});aIdx++;}
+  return out;
+}
+
+function buildHighlightedEnhanced(enhancedText, corrections){
+  if(!corrections || corrections.length===0) return esc(enhancedText);
+  let html = enhancedText;
+  // corrections の "after" 部分を単語レベル差分でハイライト
+  const sorted = [...corrections]
+    .filter(c => c.after && c.before !== c.after)
+    .sort((a,b) => b.after.length - a.after.length);
+  const placeholders = [];
+  for(const c of sorted){
+    const idx = html.indexOf(c.after);
+    if(idx !== -1){
+      const diff = wordDiff(c.before, c.after);
+      const highlighted = diff.map(d =>
+        d.changed ? `%%CW%%${d.word}%%/CW%%` : d.word
+      ).join(' ');
+      const ph = `%%PH${placeholders.length}%%`;
+      placeholders.push(highlighted);
+      html = html.substring(0, idx) + ph + html.substring(idx + c.after.length);
+    }
+  }
+  // 残っている日本語をマーク
+  const jpPlaceholders = [];
+  html = html.replace(/([\u3000-\u9FFF\uF900-\uFAFF\u3040-\u309F\u30A0-\u30FF]+)/g, (m) => {
+    const ph = `%%JP${jpPlaceholders.length}%%`;
+    jpPlaceholders.push(m);
+    return ph;
+  });
+  html = esc(html);
+  // プレースホルダーをHTML化
+  for(let i = 0; i < placeholders.length; i++){
+    const ph = esc(`%%PH${i}%%`);
+    let inner = esc(placeholders[i]);
+    inner = inner.replace(/%%CW%%(.+?)%%\/CW%%/g, '<span class="corrected-part">$1</span>');
+    html = html.replace(ph, inner);
+  }
+  for(let i = 0; i < jpPlaceholders.length; i++){
+    const ph = esc(`%%JP${i}%%`);
+    html = html.replace(ph, `<span style="background:var(--warning-light);color:var(--warning);border-radius:3px;padding:1px 3px;font-weight:600">${esc(jpPlaceholders[i])}(?)</span>`);
+  }
+  return html;
+}
+
+// ===== 添削保存 & 解析 =====
+async function parseCorrectionAndSave(){
+  if(!detailId)return;const e=entries.find(x=>x.id===detailId);if(!e)return;
+  e.correction=$('correction-input').value;e.updatedAt=new Date().toISOString();
+  // パースした corrections と enhanced text も保存
+  const corrections = parseCorrectionText(e.correction);
+  if(corrections.length > 0){
+    e.enhancedText = generateEnhancedText(e.content, corrections);
+    e.autoCorrections = corrections;
+  }
+  await dbPut('entries',e);
+  await extractKnowledge(e);
+  renderDiffView(e);
+  toast('保存 & 解析しました！','✅');
+  // 自動でBefore/Afterタブに切替
+  if(corrections.length > 0) switchDiffTab('diff');
+}
+
+async function saveCorrectionNote(){
+  return parseCorrectionAndSave();
+}
+function copyCorrection(){
+  const e=entries.find(x=>x.id===detailId);if(!e)return;
+  navigator.clipboard.writeText(CORRECTION_PROMPT+e.content).then(()=>toast('コピーしました！Claude.ai に貼り付けてください','📋'));
+}
+function editEntry(){
+  const e=entries.find(x=>x.id===detailId);if(!e)return;
+  $('journal-input').value=e.content;$('word-badge').textContent=e.wordCount+' words';
+  closeDetail();goPage('write');toast('編集モードで開きました','✏️');
+}
+function deleteEntry(){
+  modal('エントリーを削除','この操作は取り消せません。削除しますか？',[
+    {label:'キャンセル',fn:()=>{}},
+    {label:'削除',primary:true,fn:async()=>{await dbDel('entries',detailId);entries=entries.filter(e=>e.id!==detailId);closeDetail();renderEntries();updateStreak();toast('削除しました','🗑️');}}
+  ]);
+}
+
+// ===== 語彙 =====
+// ===== Knowledge Base（自動蓄積） =====
+let kbCat='all';
+function setKbCat(cat){
+  kbCat=cat;
+  renderVocabStats();
+  renderVocab();
+}
+
+// 添削結果からナレッジを自動抽出してDB保存
+async function extractKnowledge(entry){
+  if(!entry.autoCorrections||entry.autoCorrections.length===0)return;
+  const existing=await dbAll('vocab');
+  const existingKeys=new Set(existing.map(v=>(v.before||'')+'>>'+(v.after||'')));
+
+  for(const c of entry.autoCorrections){
+    const key=(c.before||'')+'>>'+(c.after||'');
+    if(existingKeys.has(key))continue; // 重複スキップ
+
+    // カテゴリ自動判定
+    let cat='mistake';
+    const jpRegex=/[\u3000-\u9FFF\uF900-\uFAFF\u3040-\u309F\u30A0-\u30FF]+/g;
+    const hasJP=jpRegex.test(c.before);
+    jpRegex.lastIndex=0;
+    let jpBefore=c.before, jpAfter=c.after;
+    if(hasJP){
+      cat='jpen';
+      // 日本語部分とその対応英語だけを抽出
+      const jpMatches=[...c.before.matchAll(/[\u3000-\u9FFF\uF900-\uFAFF\u3040-\u309F\u30A0-\u30FF]+/g)];
+      if(jpMatches.length>0){
+        // before から日本語トークンを取得
+        const bTokens=c.before.trim().split(/\s+/);
+        const aTokens=c.after.trim().split(/\s+/);
+        // 日本語を含むトークンのインデックスを特定
+        const jpIndices=[];
+        for(let ti=0;ti<bTokens.length;ti++){
+          if(/[\u3000-\u9FFF\uF900-\uFAFF\u3040-\u309F\u30A0-\u30FF]/.test(bTokens[ti])){
+            jpIndices.push(ti);
+          }
+        }
+        if(jpIndices.length>0){
+          // 日本語部分を抽出
+          jpBefore=jpIndices.map(i=>bTokens[i]).join(' ');
+          // 対応する英語部分: wordDiffで変更された単語を取得
+          const diff=wordDiff(c.before, c.after);
+          const changedWords=diff.filter(d=>d.changed).map(d=>d.word);
+          jpAfter=changedWords.length>0?changedWords.join(' '):c.after;
+        }
+      }
+    }else{
+      // Grammar mistake vs expression improvement
+      // mistake: 冠詞追加/削除, 時制変化, 前置詞, スペル, 主語一致など小さい修正
+      // better: フレーズ全体の言い換え（意味は同じだが表現が違う）
+      const bw=c.before.toLowerCase().trim().split(/\s+/);
+      const aw=c.after.toLowerCase().trim().split(/\s+/);
+      // 共通単語の割合で判定
+      const bSet=new Set(bw);
+      const aSet=new Set(aw);
+      let shared=0;
+      for(const w of bSet){if(aSet.has(w))shared++;}
+      const unionSize=new Set([...bw,...aw]).size;
+      const overlapRatio=unionSize>0?shared/unionSize:1;
+      // 短い変更（1-2語の追加/変更）= mistake
+      const diff=wordDiff(c.before, c.after);
+      const changedCount=diff.filter(d=>d.changed).length;
+      const totalCount=diff.length;
+      const changedRatio=totalCount>0?changedCount/totalCount:0;
+      // better条件: 半数以上の単語が入れ替わり、かつ3語以上の修正
+      // mistake条件: 1-2語の小さい修正（冠詞、時制、前置詞など）
+      if(changedCount>=3 && (overlapRatio<0.5 || changedRatio>0.5)){
+        cat='better';
+      }else{
+        cat='mistake';
+      }
+    }
+
+    const saveBefore=cat==='jpen'?jpBefore:c.before;
+    const saveAfter=cat==='jpen'?jpAfter:c.after;
+    const key2=(saveBefore||'')+'>>'+(saveAfter||'');
+    if(existingKeys.has(key2))continue;
+    await dbPut('vocab',{
+      before:saveBefore,
+      after:saveAfter,
+      cat,
+      entryDate:entry.date,
+      createdAt:new Date().toISOString()
+    });
+    existingKeys.add(key);
+  }
+}
+
+// 類似度の簡易計算
+function levenshteinRatio(a,b){
+  const longer=a.length>b.length?a:b;
+  const shorter=a.length>b.length?b:a;
+  if(longer.length===0)return 1;
+  let matches=0;
+  for(let i=0;i<shorter.length;i++){
+    if(shorter[i]===longer[i])matches++;
+  }
+  return matches/longer.length;
+}
+
+async function loadVocab(){
+  vocab=await dbAll('vocab');
+  vocab.sort((a,b)=>(b.createdAt||'').localeCompare(a.createdAt||''));
+  renderVocabStats();
+  renderVocab();
+  $('quiz-start-btn').style.display=vocab.length>=3?'':'none';
+}
+
+function renderVocabStats(){
+  const mistakes=vocab.filter(v=>v.cat==='mistake').length;
+  const better=vocab.filter(v=>v.cat==='better').length;
+  const jpen=vocab.filter(v=>v.cat==='jpen').length;
+  const ac=kbCat;
+  $('kb-stats').innerHTML=`
+    <div class="kb-stat-chip${ac==='all'?' active':''}" onclick="setKbCat('all')"><div class="kb-stat-num" style="color:var(--accent)">${vocab.length}</div><div class="kb-stat-label">All</div></div>
+    <div class="kb-stat-chip${ac==='mistake'?' active':''}" onclick="setKbCat('mistake')"><div class="kb-stat-num" style="color:var(--danger)">${mistakes}</div><div class="kb-stat-label">Mistakes</div></div>
+    <div class="kb-stat-chip${ac==='better'?' active':''}" onclick="setKbCat('better')"><div class="kb-stat-num" style="color:var(--success)">${better}</div><div class="kb-stat-label">Better</div></div>
+    <div class="kb-stat-chip${ac==='jpen'?' active':''}" onclick="setKbCat('jpen')"><div class="kb-stat-num" style="color:var(--info)">${jpen}</div><div class="kb-stat-label">JP→EN</div></div>`;
+}
+
+function renderVocab(){
+  const q=$('vocab-search').value.toLowerCase();
+  let f=vocab;
+  if(kbCat!=='all') f=f.filter(v=>v.cat===kbCat);
+  if(q) f=f.filter(v=>(v.before||'').toLowerCase().includes(q)||(v.after||'').toLowerCase().includes(q)||(v.word||'').toLowerCase().includes(q)||(v.meaning||'').toLowerCase().includes(q));
+  if(f.length===0&&vocab.length===0){$('vocab-list').innerHTML='';$('vocab-empty').style.display='';return;}
+  $('vocab-empty').style.display=f.length===0?'':'none';
+  $('vocab-list').innerHTML=f.map(v=>{
+    // 新形式（before/after）と旧形式（word/meaning）の両方に対応
+    const left=v.before||v.word||'';
+    const right=v.after||v.meaning||'';
+    const catLabel=v.cat==='mistake'?'Mistake':v.cat==='better'?'Better':v.cat==='jpen'?'JP→EN':'';
+    const catClass=v.cat||'mistake';
+    return `
+    <div class="vocab-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+        <div style="display:flex;align-items:center;gap:6px">
+          ${catLabel?`<span class="vocab-cat-badge ${catClass}">${catLabel}</span>`:''}
+          <span class="vocab-card-date">${v.createdAt?fmtDate(v.createdAt.slice(0,10)):''}</span>
+        </div>
+        <button class="btn-ghost" onclick="delVocab(${v.id})" style="font-size:0.7rem;padding:2px 6px">🗑️</button>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center">
+        <span style="color:var(--danger);font-size:0.88rem">${esc(left)}</span>
+        <span style="color:var(--text-tertiary);font-size:0.8rem">→</span>
+        <span style="color:var(--success);font-weight:600;font-size:0.88rem">${esc(right)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function delVocab(id){await dbDel('vocab',id);vocab=vocab.filter(v=>v.id!==id);renderVocabStats();renderVocab();toast('削除しました','🗑️');}
+
+// ===== クイズ（ナレッジベース版）=====
+function startQuiz(){
+  let items=vocab;
+  if(kbCat!=='all') items=items.filter(v=>v.cat===kbCat);
+  if(items.length<3){toast('3件以上のナレッジが必要です','⚠️');return;}
+  quizItems=[...items].sort(()=>Math.random()-0.5);quizIdx=0;quizCorrect=0;quizTotal=0;
+  $('quiz-section').style.display='';showQuizQ();
+}
+function showQuizQ(){
+  if(quizIdx>=quizItems.length)quizIdx=0;
+  const v=quizItems[quizIdx];
+  // 間違った表現 or 日本語を表示 → 正しい英語を入力させる
+  $('quiz-word').textContent=v.before||v.word||'';
+  $('quiz-input').value='';$('quiz-input').className='quiz-input';
+  $('quiz-input').placeholder=v.cat==='jpen'?'English translation...':'Better expression...';
+  $('quiz-result').textContent='';
+  $('quiz-score').textContent=`Score: ${quizCorrect}/${quizTotal}`;
+  $('quiz-input').focus();
+}
+function checkQuiz(){
+  const v=quizItems[quizIdx];const ans=$('quiz-input').value.trim();
+  if(!ans)return;
+  quizTotal++;
+  const correct=v.after||v.meaning||'';
+  if(ans.toLowerCase()===correct.toLowerCase()||correct.toLowerCase().includes(ans.toLowerCase())){
+    quizCorrect++;$('quiz-input').className='quiz-input correct';
+    $('quiz-result').innerHTML=`<span style="color:var(--success)">✅ ${esc(correct)}</span>`;
+  }else{
+    $('quiz-input').className='quiz-input wrong';
+    $('quiz-result').innerHTML=`<span style="color:var(--danger)">❌ ${esc(correct)}</span>`;
+  }
+  $('quiz-score').textContent=`Score: ${quizCorrect}/${quizTotal}`;
+}
+function nextQuiz(){quizIdx++;showQuizQ();}
+
+// ===== ストリーク =====
+function calcStreak(){
+  if(!entries.length)return 0;
+  const dates=[...new Set(entries.map(e=>e.date))].sort().reverse();
+  let streak=0,check=new Date();
+  if(dates[0]!==dateKey())check.setDate(check.getDate()-1);
+  for(let i=0;i<365;i++){if(dates.includes(dateKey(check))){streak++;check.setDate(check.getDate()-1);}else break;}
+  return streak;
+}
+function updateStreak(){
+  const s=calcStreak();
+  $('streak-num').textContent=s;
+  $('streak-pill').style.display=s>0?'':'none';
+  $('s-streak').textContent=s;
+}
+
+// ===== ダッシュボード =====
+async function loadStats(){
+  entries=await dbAll('entries');vocab=await dbAll('vocab');
+  entries.sort((a,b)=>b.date.localeCompare(a.date));
+  $('s-streak').textContent=calcStreak();
+  $('s-entries').textContent=entries.length;
+  $('s-words').textContent=entries.reduce((s,e)=>s+(e.wordCount||0),0).toLocaleString();
+  $('s-vocab').textContent=vocab.length;
+  renderHeatmap();renderBars();
+}
+function renderHeatmap(){
+  const wordsByDate={};entries.forEach(e=>{wordsByDate[e.date]=(wordsByDate[e.date]||0)+e.wordCount;});
+  const today=new Date();const dow=(today.getDay()+6)%7;
+  const end=new Date(today);end.setDate(end.getDate()+(6-dow));
+  let html='';
+  for(let i=83;i>=0;i--){
+    const d=new Date(end);d.setDate(d.getDate()-i);
+    const k=dateKey(d);const w=wordsByDate[k]||0;
+    let lv=0;if(w>0)lv=1;if(w>=50)lv=2;if(w>=100)lv=3;if(w>=200)lv=4;
+    const future=d>today;
+    html+=`<div class="hm-cell ${future?'future':'l'+lv}" title="${fmtDate(k)}: ${w} words"></div>`;
+  }
+  $('heatmap').innerHTML=html;
+}
+function renderBars(){
+  const wordsByDate={};entries.forEach(e=>{wordsByDate[e.date]=(wordsByDate[e.date]||0)+e.wordCount;});
+  const today=new Date();let max=1;const days=[];
+  for(let i=13;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);const k=dateKey(d);const w=wordsByDate[k]||0;if(w>max)max=w;days.push({k,w,label:d.getDate()});}
+  $('bar-chart').innerHTML=days.map(d=>`<div class="bar-col"><div class="bar-fill ${d.w===0?'empty':''}" style="height:${Math.max(2,d.w/max*100)}%" title="${d.w} words"></div><div class="bar-label">${d.label}</div></div>`).join('');
+}
+
+// ===== 週次レビュー =====
+function copyWeeklyReview(){
+  const ago=new Date();ago.setDate(ago.getDate()-7);
+  const week=entries.filter(e=>new Date(e.date)>=ago).sort((a,b)=>a.date.localeCompare(b.date));
+  if(!week.length){toast('今週のエントリーがありません','⚠️');return;}
+  let t=WEEKLY_PROMPT;week.forEach(e=>{t+=`\n\n[${fmtDate(e.date)}]\n${e.content}`;});
+  navigator.clipboard.writeText(t).then(()=>toast(`${week.length}件をコピーしました`,'📋'));
+}
+
+// ===== エクスポート/インポート =====
+async function exportJSON(){
+  const en=await dbAll('entries');const vo=await dbAll('vocab');
+  // IDを除外してエクスポート（インポート時の衝突防止）
+  const cleanEntries=en.map(({id,...rest})=>rest);
+  const cleanVocab=vo.map(({id,...rest})=>rest);
+  const d={version:2,exportedAt:new Date().toISOString(),entries:cleanEntries,vocab:cleanVocab};
+  const b=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=`fluentink-backup-${dateKey()}.json`;a.click();
+  URL.revokeObjectURL(a.href);toast('エクスポートしました','📤');
+}
+async function importJSON(ev){
+  const file=ev.target.files[0];if(!file)return;
+  try{
+    const d=JSON.parse(await file.text());
+    if(!d.entries||!Array.isArray(d.entries)||!d.vocab||!Array.isArray(d.vocab))throw 0;
+    // バリデーション: 最低限 date と content があるか確認
+    const validEntries=d.entries.filter(e=>e.date&&e.content);
+    const validVocab=d.vocab.filter(v=>v.word&&v.meaning);
+    modal('インポート',`${validEntries.length}件のエントリーと${validVocab.length}件の語彙をインポートしますか？（既存データに追加されます）`,[
+      {label:'キャンセル',fn:()=>{}},
+      {label:'インポート',primary:true,fn:async()=>{
+        // IDを除いてインポート（自動採番させる）
+        for(const e of validEntries){const{id,...rest}=e;await dbPut('entries',rest);}
+        for(const v of validVocab){const{id,...rest}=v;await dbPut('vocab',rest);}
+        await loadAll();toast(`${validEntries.length}件 + ${validVocab.length}件をインポートしました`,'📥');
+      }}
+    ]);
+  }catch(e){toast('ファイル形式が不正です','⚠️');}
+  ev.target.value='';
+}
+
+// ===== オンボーディング =====
+function dismissOnboarding(){
+  $('onboarding').classList.add('hidden');
+  $('app-wrap').classList.add('visible');
+  localStorage.setItem('fi-onboarded','1');
+  setTimeout(()=>$('onboarding').style.display='none',600);
+}
+
+// ===== 全データ読込 =====
+let initialLoadDone=false;
+async function loadAll(){
+  entries=await dbAll('entries');vocab=await dbAll('vocab');
+  entries.sort((a,b)=>b.date.localeCompare(a.date));
+  updateStreak();
+  // 初回ロード時のみ、今日のエントリーをテキストエリアに復元（編集中の上書き防止）
+  if(!initialLoadDone){
+    initialLoadDone=true;
+    const today=entries.find(e=>e.date===dateKey());
+    if(today){
+      $('journal-input').value=today.content;
+      $('word-badge').textContent=today.wordCount+' words';
+    }
+  }
+}
+
+// ===== 初期化 =====
+async function init(){
+  initTheme();
+  $('today-label').textContent=fmtDate(dateKey());
+  showPrompt();showTip();updateTimerUI();initSpeech();
+  updateCountdown();
+
+  const savedTimer=localStorage.getItem('fi-timer');
+  if(savedTimer){timerMin=parseInt(savedTimer);$('timer-select').value=timerMin;resetTimer();}
+  // API Key & Model ロード
+  loadApiKey();
+  const savedModel=localStorage.getItem('fi-ai-model');
+  if(savedModel)$('ai-model-select').value=savedModel;
+
+  if(localStorage.getItem('fi-onboarded')){
+    $('onboarding').style.display='none';
+    $('app-wrap').classList.add('visible');
+  }
+
+  await openDB();await loadAll();
+}
+init();
+// PWA Service Worker 登録
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>
