@@ -2067,8 +2067,7 @@ async function saveEntry(){
       correction:'',
       createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()
     };
-    const existing=entries.find(e=>e.date===dateKey());
-    if(existing){entry.id=existing.id;entry.createdAt=existing.createdAt;entry.correction=existing.correction||'';}
+    // 毎回新規エントリーとして保存（同じ日付でも上書きしない）
     const savedId=await dbPut('entries',entry);
     if(!entry.id) entry.id=savedId;
     // テキストエリアをクリア
@@ -3080,11 +3079,7 @@ async function loadAll(){
   // 初回ロード時のみ、今日のエントリーをテキストエリアに復元（編集中の上書き防止）
   if(!initialLoadDone){
     initialLoadDone=true;
-    const today=entries.find(e=>e.date===dateKey());
-    if(today){
-      $('journal-input').value=today.content;
-      $('word-badge').textContent=today.wordCount+' words';
-    }
+    // テキストエリアは常にクリアで開始（毎回新規エントリー）
   }
 }
 
